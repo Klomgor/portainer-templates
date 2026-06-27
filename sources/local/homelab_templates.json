@@ -581,6 +581,46 @@
       },
       "title": "Pumperly",
       "type": 3
+    },
+    {
+      "categories": [
+        "Monitoring",
+        "Homelab"
+      ],
+      "description": "Self-hosted homelab dashboard, one container. Per-container GPU/VRAM attribution (which process holds the card, not just total load), Docker health/logs, systemd status, host vitals (CPU/RAM/disk/temps), multiple hosts over SSH. Alerts via Discord/ntfy/Telegram. Read-only MCP server on :9810. MIT.",
+      "env": [
+        {
+          "default": "10",
+          "label": "SAMPLE_INTERVAL_SECONDS",
+          "name": "SAMPLE_INTERVAL_SECONDS",
+          "description": "Polling interval in seconds (default 10)"
+        },
+        {
+          "default": "180",
+          "label": "HISTORY_DAYS",
+          "name": "HISTORY_DAYS",
+          "description": "Days of history to retain"
+        }
+      ],
+      "image": "sikamikaniko123/homelab-monitor:latest",
+      "logo": "https://raw.githubusercontent.com/SikamikanikoBG/homelab-monitor/main/docs/logo-400.png",
+      "name": "homelab-monitor",
+      "network": "host",
+      "platform": "linux",
+      "ports": [],
+      "restart_policy": "unless-stopped",
+      "title": "HomeLab Monitor",
+      "type": 1,
+      "volumes": [
+        {
+          "bind": "/var/run/docker.sock",
+          "container": "/var/run/docker.sock",
+          "readonly": true
+        },
+        {
+          "container": "/app/data"
+        }
+      ]
     }
   ]
 }
