@@ -1,11 +1,13 @@
 import json
 import os
+import re
 import string
+import sys
 
 BASE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 SOURCES_DIR = os.path.join(BASE_DIR, 'sources')
 
-TYPE_LABELS = {1: 'container', 2: 'swarm', 3: 'stack', 4: 'kubernetes'}
+TYPE_LABELS = {1: 'container', 2: 'swarm', 3: 'stack', 4: 'edge'}
 
 reset_color = "\033[0m"
 def rgb(r, g, b):
@@ -14,6 +16,16 @@ def rgb(r, g, b):
 def normalize_string(original, lowercase=True):
   normalized = original.translate(str.maketrans('', '', string.punctuation)).replace(' ', '')
   return normalized.lower() if lowercase else normalized.capitalize()
+
+CATEGORY_ACRONYMS = {'ai', 'vpn', 'iot', 'nas', 'dns', 'ci', 'cd', 'tv', 'os', 'ip', 'sql',
+                     'api', 'cms', 'ftp', 'rss', 'cctv', 'llm', 'osint', 'pdf', '3d'}
+
+def normalize_category(c):
+  """Split a category into words and title-case it for display"""
+  words = [w for w in re.split(r'[^0-9a-zA-Z]+', c) if w]
+  label = ' '.join(w.upper() if w.lower() in CATEGORY_ACRONYMS else w.capitalize()
+                   for w in words)
+  return 'edge' if label == 'Edge' else label
 
 def template_score(t):
   """Score a template's completeness. Higher is more complete."""
@@ -59,6 +71,14 @@ def normalize_template_fields(templates):
       merged = list(dict.fromkeys(existing + t.pop('category')))
       t['categories'] = merged
 
+    # Convert legacy v2 edge templates (type 4 with a stackfile URL) to compose stacks
+    if t.get('type') == 4 and isinstance(t.get('stackfile'), str):
+      m = re.match(r'https://raw\.githubusercontent\.com/([^/]+/[^/]+)/[^/]+/(.+)', t.pop('stackfile'))
+      if m:
+        t['type'] = 3
+        t['repository'] = {'url': f'https://github.com/{m[1]}', 'stackfile': m[2]}
+        t.setdefault('categories', ['edge'])
+
     # Fix env vars
     if 'env' in t:
       cleaned_env = []
@@ -72,8 +92,17 @@ def normalize_template_fields(templates):
           env.setdefault('preset', True)
         elif 'set' in env:
           del env['set']
-        cleaned_env.append(env)
+        cleaned_env.append({k: v for k, v in env.items() if k in VALID_ENV_KEYS})
       t['env'] = cleaned_env
+
+    # Drop malformed leading ':' from port mappings (e.g. ':80/tcp')
+    if 'ports' in t:
+      t['ports'] = [p.lstrip(':') for p in t['ports']]
+
+    if isinstance(t.get('maintainer'), str):
+      t['maintainer'] = t['maintainer'].strip()
+
+    t.pop('devices', None)  # not part of the Portainer template spec
 
     # Fix volume 'read_only' -> 'readonly' (and coerce to bool)
     for vol in t.get('volumes', []):
@@ -86,9 +115,13 @@ def is_valid_template(t):
   if not isinstance(t.get('title'), str) or not isinstance(t.get('description'), str):
     return False
   tmpl_type = t.get('type', 1)
+  if not isinstance(tmpl_type, int):
+    return False
   if tmpl_type == 1 and 'image' not in t:
     return False
   if tmpl_type in (2, 3) and 'repository' not in t:
+    return False
+  if tmpl_type == 4 and 'repository' not in t and 'stackFile' not in t:
     return False
   return True
 
@@ -117,9 +150,12 @@ def deduplicate_and_normalize(templates):
       best[key] = t
   result = []
   for t in best.values():
-    t['categories'] = list(dict.fromkeys(
-      normalize_string(c, lowercase=False) for c in t.get('categories', [])
-    ))
+    cats = {}
+    for c in t.get('categories', []):
+      label = normalize_category(c)
+      if label:
+        cats.setdefault(label.lower(), label)
+    t['categories'] = list(cats.values())
     result.append(t)
   return result
 
@@ -157,6 +193,16 @@ if __name__ == '__main__':
   templates.sort(key=lambda t: t['title'].lower())
   for i, t in enumerate(templates, start=1):
     t['id'] = i
+  out_path = os.path.join(BASE_DIR, 'templates.json')
+  try:
+    with open(out_path) as f:
+      previous = len(json.load(f)['templates'])
+  except (OSError, ValueError, KeyError):
+    previous = 0
+  # A failed source download must not silently shrink the published list
+  if len(templates) < previous * 0.9 and not os.environ.get('ALLOW_SHRINK'):
+    sys.exit(f'Refusing to write: template count fell from {previous} to {len(templates)}. '
+             'Set ALLOW_SHRINK=1 if this is intentional.')
   output = {'version': '3', 'templates': templates}
-  with open(os.path.join(BASE_DIR, 'templates.json'), 'w') as f:
+  with open(out_path, 'w') as f:
     json.dump(output, f, indent=2, sort_keys=False)

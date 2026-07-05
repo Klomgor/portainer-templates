@@ -20,7 +20,13 @@ def load_csv_file(file_path):
 
 def slugify(title: str):
     baseUrl = 'https://portainer-templates.as93.net'
-    return f'{baseUrl}/{re.sub(r"[^a-zA-Z ]", "", title.lower()).replace(" ", "-")}'
+    slug = re.sub(r'\s+', '-', re.sub(r'[^a-z0-9 ]', '', title.lower()).strip())
+    return f'{baseUrl}/{slug}'
+
+def clean_text(text):
+    """Remove quotes/brackets and duplicate whitespace for html/md render"""
+    text = (text or '').replace('"', '”').replace("'", '’').replace('<', '').replace('>', '')
+    return re.sub(r'\s+', ' ', text).strip()
 
 def generate_app_list():
   templates = load_json_file(templates_path)['templates']
@@ -30,7 +36,7 @@ def generate_app_list():
       name = template['title'].title()
       maintainer = template.get('maintainer')
       maintainer_md_link = f" -- ([Report issues]({maintainer}))" if maintainer else ''
-      description = re.sub('[^0-9a-zA-Z]+', ' ', (template['description'] or ''))
+      description = clean_text(template['description'])
       if 'logo' in template and template['logo']:
           logo = f"<img title=\"{description}\" src='{template['logo']}' width='26' height='26' /> "
       else:
