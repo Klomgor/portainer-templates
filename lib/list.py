@@ -6,6 +6,10 @@ import csv
 import re
 import sys
 
+from log import get_logger, banner
+
+log = get_logger()
+
 current_dir = os.path.dirname(os.path.abspath(__file__))
 project_dir = os.path.dirname(current_dir)
 readme_path = os.path.join(project_dir, '.github/README.md')
@@ -81,25 +85,32 @@ def insert_content_between_markers(file_path, start_marker, end_marker, content_
             break
 
     if start_index < 0 or end_index <= start_index:
-        sys.exit(f'Markers {start_marker} / {end_marker} not found in {file_path}')
+        log.error(f'Markers {start_marker} / {end_marker} not found in {file_path}')
+        sys.exit(1)
 
     lines[start_index + 1:end_index] = [content_to_insert + '\n']
 
     with open(file_path, 'w') as file:
         file.writelines(lines)
 
+banner('List', 'Render app + source lists into the README')
+
 # Insert sources list into readme
+sources_md = generate_sources_list()
 insert_content_between_markers(
   readme_path,
   '<!-- auto-insert-sources:start -->',
   '<!-- auto-insert-sources:end -->',
-  generate_sources_list(),
+  sources_md,
 )
+log.info(f'Rendered {sources_md.count(chr(10))} sources into README')
 
 # Insert app list into readme
+apps_md = generate_app_list()
 insert_content_between_markers(
   readme_path,
   '<!-- auto-insert-apps:start -->',
   '<!-- auto-insert-apps:end -->',
-  generate_app_list(),
+  apps_md,
 )
+log.info(f'Rendered {apps_md.count(chr(10))} apps into README')

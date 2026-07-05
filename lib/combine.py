@@ -7,6 +7,10 @@ import sys
 
 import jsonschema
 
+from log import get_logger, banner
+
+log = get_logger()
+
 BASE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 SOURCES_DIR = os.path.join(BASE_DIR, 'sources')
 
@@ -16,10 +20,6 @@ FORMAT_CHECKER = jsonschema.FormatChecker()
 TEMPLATE_KEYS = set(SCHEMA['properties']['templates']['items']['properties'])
 
 TYPE_LABELS = {1: 'container', 2: 'swarm', 3: 'stack', 4: 'edge'}
-
-reset_color = "\033[0m"
-def rgb(r, g, b):
-  return f"\033[38;2;{r};{g};{b}m"
 
 def normalize_string(original, lowercase=True):
   normalized = original.translate(str.maketrans('', '', string.punctuation)).replace(' ', '')
@@ -61,8 +61,7 @@ def load_sources():
         try:
           source_templates = json.load(f)['templates']
         except (json.decoder.JSONDecodeError, KeyError) as err:
-          print(f'{rgb(255, 0, 0)}Skipping source due to error:{reset_color} {f.name}')
-          print(f'Error: {err}')
+          log.warning(f'Skipping source due to error: {f.name} ({err})')
           continue
       source_templates = [t for t in source_templates if isinstance(t, dict)]
       for t in source_templates:
@@ -198,7 +197,7 @@ def normalize_template_fields(templates):
       normalize_template(t)
       normalized.append(t)
     except Exception as err:
-      print(f'{rgb(255, 165, 0)}Skipping unnormalizable template:{reset_color} {t.get("title", "<no title>")} ({err})')
+      log.warning(f'Skipping unnormalizable template: {t.get("title", "<no title>")} ({err})')
   return normalized
 
 def is_valid_template(t):
@@ -223,7 +222,7 @@ def deduplicate_and_normalize(templates):
   best = {}
   for t in templates:
     if not is_valid_template(t):
-      print(f'{rgb(255, 165, 0)}Skipping invalid template:{reset_color} {t.get("title", "<no title>")}')
+      log.warning(f'Skipping invalid template: {t.get("title", "<no title>")}')
       continue
     key = (normalize_string(t['title']), t.get('type', 1))
     t_is_local = t.get('_local', False)
@@ -286,8 +285,12 @@ def missing_sources():
   return expected - present
 
 if __name__ == '__main__':
+  banner('Combine', 'Merge, normalize + dedupe template sources into templates.json')
   raw = normalize_template_fields(load_sources())
+  sources_count = len({t.get('_source') for t in raw})
+  log.info(f'Normalized {len(raw)} templates from {sources_count} sources')
   templates = deduplicate_and_normalize(raw)
+  log.info(f'{len(templates)} unique templates after dedup ({len(raw) - len(templates)} removed)')
   postfix_ambiguous_titles(templates)
   # Strip internal tags
   for t in templates:
@@ -305,15 +308,19 @@ if __name__ == '__main__':
   # A failed source download must not silently shrink the published list
   missing = missing_sources()
   if missing and not os.environ.get('ALLOW_SHRINK'):
-    sys.exit(f'Refusing to write: missing external sources: {", ".join(sorted(missing))}. '
-             'Set ALLOW_SHRINK=1 if this is intentional.')
+    log.error(f'Refusing to write: missing external sources: {", ".join(sorted(missing))}. '
+              'Set ALLOW_SHRINK=1 if this is intentional.')
+    sys.exit(1)
   if len(templates) < previous * 0.9 and not os.environ.get('ALLOW_SHRINK'):
-    sys.exit(f'Refusing to write: template count fell from {previous} to {len(templates)}. '
-             'Set ALLOW_SHRINK=1 if this is intentional.')
+    log.error(f'Refusing to write: template count fell from {previous} to {len(templates)}. '
+              'Set ALLOW_SHRINK=1 if this is intentional.')
+    sys.exit(1)
   output = {'version': '3', 'templates': templates}
   try:
     jsonschema.Draft7Validator(SCHEMA, format_checker=FORMAT_CHECKER).validate(output)
   except jsonschema.ValidationError as ve:
-    sys.exit(f'Refusing to write: output fails schema at {ve.json_path}: {ve.message}')
+    log.error(f'Refusing to write: output fails schema at {ve.json_path}: {ve.message}')
+    sys.exit(1)
+  log.info(f'Writing {len(templates)} templates to templates.json (previously {previous})')
   with open(out_path, 'w') as f:
     json.dump(output, f, indent=2, sort_keys=False)
