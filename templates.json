@@ -79,12 +79,12 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Adguard/Workdir",
-          "container": "/opt/adguardhome/work"
+          "container": "/opt/adguardhome/work",
+          "bind": "/portainer/Files/AppData/Adguard/Workdir"
         },
         {
-          "bind": "/portainer/Files/AppData/Adguard/Conf",
-          "container": "/opt/adguardhome/conf"
+          "container": "/opt/adguardhome/conf",
+          "bind": "/portainer/Files/AppData/Adguard/Conf"
         }
       ],
       "maintainer": "https://github.com/mikestraney/portainer-templates/",
@@ -137,12 +137,12 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/AdguardHome/config",
-          "container": "/opt/adguardhome/conf"
+          "container": "/opt/adguardhome/conf",
+          "bind": "/portainer/Files/AppData/Config/AdguardHome/config"
         },
         {
-          "bind": "/portainer/Files/AppData/Config/AdguardHome/work",
-          "container": "/opt/adguardhome/work"
+          "container": "/opt/adguardhome/work",
+          "bind": "/portainer/Files/AppData/Config/AdguardHome/work"
         }
       ],
       "note": "<b>Template created by Pi-Hosted Series</b><br><b>Check our Github page: <a href=\"https://github.com/pi-hosted/pi-hosted\" target=\"_blank\">https://github.com/pi-hosted/pi-hosted</a></b><br><br><b>Official Webpage: </b><a href=\"https://adguard.com/en/adguard-home/overview.html\" target=\"_blank\">https://adguard.com/en/adguard-home/overview.html</a><br><b>Official Docker Documentation: </b><a href=\"https://github.com/AdguardTeam/AdGuardHome/wiki/Docker\" target=\"_blank\">https://github.com/AdguardTeam/AdGuardHome/wiki/Docker</a><br><br><br>",
@@ -242,24 +242,24 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Music",
-          "container": "/music"
+          "container": "/music",
+          "bind": "/portainer/Music"
         },
         {
-          "bind": "/portainer/Files/AppData/Airsonic/Playlists",
-          "container": "/playlists"
+          "container": "/playlists",
+          "bind": "/portainer/Files/AppData/Airsonic/Playlists"
         },
         {
-          "bind": "/portainer/Podcasts",
-          "container": "/podcasts"
+          "container": "/podcasts",
+          "bind": "/portainer/Podcasts"
         },
         {
-          "bind": "/portainer/Files/AppData/Airsonic/Media",
-          "container": "/media"
+          "container": "/media",
+          "bind": "/portainer/Files/AppData/Airsonic/Media"
         },
         {
-          "bind": "/portainer/Files/AppData/Config/Airsonic/",
-          "container": "/config"
+          "container": "/config",
+          "bind": "/portainer/Files/AppData/Config/Airsonic/"
         }
       ],
       "maintainer": "https://github.com/mikestraney/portainer-templates/",
@@ -377,8 +377,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/alpine-xfce4-novnc/home/alpine/downloads",
-          "container": "/home/alpine/downloads"
+          "container": "/home/alpine/downloads",
+          "bind": "/portainer/Files/AppData/Config/alpine-xfce4-novnc/home/alpine/downloads"
         }
       ],
       "maintainer": "https://github.com/novaspirit/pi-hosted/",
@@ -511,8 +511,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/apache-httpd",
-          "container": "/usr/local/apache2/htdocs/"
+          "container": "/usr/local/apache2/htdocs/",
+          "bind": "/portainer/Files/AppData/Config/apache-httpd"
         }
       ],
       "note": "<b>Template created by Pi-Hosted Series</b><br><b>Check our Github page: <a href=\"https://github.com/pi-hosted/pi-hosted\" target=\"_blank\">https://github.com/pi-hosted/pi-hosted</a></b><br><br><b>Official Webpage: </b><a href=\"https://httpd.apache.org/\" target=\"_blank\">https://httpd.apache.org/</a><br><b>Official Docker Documentation: </b><a href=\"https://hub.docker.com/_/httpd\" target=\"_blank\">https://hub.docker.com/_/httpd</a><br><br><br>",
@@ -675,16 +675,16 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/ArchiSteamFarm/config",
-          "container": "/app/config"
+          "container": "/app/config",
+          "bind": "/portainer/Files/AppData/Config/ArchiSteamFarm/config"
         },
         {
-          "bind": "/portainer/Files/AppData/Config/ArchiSteamFarm/plugins",
-          "container": "/app/plugins"
+          "container": "/app/plugins",
+          "bind": "/portainer/Files/AppData/Config/ArchiSteamFarm/plugins"
         },
         {
-          "bind": "/portainer/Files/AppData/Config/ArchiSteamFarm/logs",
-          "container": "/app/logs"
+          "container": "/app/logs",
+          "bind": "/portainer/Files/AppData/Config/ArchiSteamFarm/logs"
         }
       ],
       "note": "<b>Template created by Pi-Hosted Series</b><br><b>Check our Github page: <a href=\"https://github.com/pi-hosted/pi-hosted\" target=\"_blank\">https://github.com/pi-hosted/pi-hosted</a></b><br><br><b>Official Webpage: </b><a href=\"https://github.com/JustArchiNET/ArchiSteamFarm/\" target=\"_blank\">https://github.com/JustArchiNET/ArchiSteamFarm/</a><br><b>Official Docker Documentation: </b><a href=\"https://github.com/JustArchiNET/ArchiSteamFarm/wiki/Docker/\" target=\"_blank\">https://github.com/JustArchiNET/ArchiSteamFarm/wiki/Docker/</a><br><br><br>",
@@ -737,8 +737,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/archivebox",
-          "container": "/data"
+          "container": "/data",
+          "bind": "/portainer/Files/AppData/Config/archivebox"
         }
       ],
       "maintainer": "https://github.com/novaspirit/pi-hosted/",
@@ -841,12 +841,12 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/AriaNG",
-          "container": "/aria2/conf"
+          "container": "/aria2/conf",
+          "bind": "/portainer/Files/AppData/Config/AriaNG"
         },
         {
-          "bind": "/portainer/Downloads",
-          "container": "/aria2/data"
+          "container": "/aria2/data",
+          "bind": "/portainer/Downloads"
         }
       ],
       "note": "<b>Template created by Pi-Hosted Series</b><br><b>Check our Github page: <a href=\"https://github.com/pi-hosted/pi-hosted\" target=\"_blank\">https://github.com/pi-hosted/pi-hosted</a></b><br><br><b>Official Webpage: </b><a href=\"https://github.com/hurlenko/aria2-ariang-docker\" target=\"_blank\">https://github.com/hurlenko/aria2-ariang-docker</a><br><b>Official Docker Documentation: </b><a href=\"https://github.com/hurlenko/aria2-ariang-docker\" target=\"_blank\">https://github.com/hurlenko/aria2-ariang-docker</a><br><br><br>",
@@ -1023,8 +1023,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/Authelia",
-          "container": "/etc/authelia/"
+          "container": "/etc/authelia/",
+          "bind": "/portainer/Files/AppData/Config/Authelia"
         }
       ],
       "maintainer": "https://github.com/mikestraney/portainer-templates/",
@@ -1304,7 +1304,6 @@
         "No Code"
       ],
       "description": "Open source no-code database and Airtable alternative.Create your own online database without technical experience. Our user friendly no-code tool gives you the powers of a developer without leaving your browser.",
-      "logo": "https://].io/_nuxt/img/logo.1421f77.svg",
       "name": "Baserow",
       "platform": "linux",
       "repository": {
@@ -1444,7 +1443,6 @@
         "Monitoring"
       ],
       "description": "A lightweight server resource monitoring hub with historical data, docker stats, and alerts.",
-      "logo": "",
       "name": "beszel",
       "platform": "linux",
       "repository": {
@@ -1522,8 +1520,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/Bitwarden-rs",
-          "container": "/config"
+          "container": "/config",
+          "bind": "/portainer/Files/AppData/Config/Bitwarden-rs"
         }
       ],
       "maintainer": "https://github.com/mikestraney/portainer-templates/",
@@ -1725,16 +1723,16 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Books",
-          "container": "/books"
+          "container": "/books",
+          "bind": "/portainer/Books"
         },
         {
-          "bind": "/portainer/Files/Podcasts",
-          "container": "/podcast"
+          "container": "/podcast",
+          "bind": "/portainer/Files/Podcasts"
         },
         {
-          "bind": "/portainer/Files/AppData/Config/Booksonic",
-          "container": "/config"
+          "container": "/config",
+          "bind": "/portainer/Files/AppData/Config/Booksonic"
         }
       ],
       "maintainer": "https://github.com/mikestraney/portainer-templates/",
@@ -1997,7 +1995,6 @@
         "Finance"
       ],
       "platform": "linux",
-      "logo": "",
       "image": "linuxserver/budge:latest",
       "env": [
         {
@@ -2074,16 +2071,16 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/Caddy/Data",
-          "container": "/data"
+          "container": "/data",
+          "bind": "/portainer/Files/AppData/Config/Caddy/Data"
         },
         {
-          "bind": "/portainer/Files/AppData/Config/Caddy/Config",
-          "container": "/config"
+          "container": "/config",
+          "bind": "/portainer/Files/AppData/Config/Caddy/Config"
         },
         {
-          "bind": "/portainer/Files/AppData/Config/Caddy/Caddyfile",
-          "container": "/etc/caddy/Caddyfile"
+          "container": "/etc/caddy/Caddyfile",
+          "bind": "/portainer/Files/AppData/Config/Caddy/Caddyfile"
         }
       ],
       "maintainer": "https://github.com/novaspirit/pi-hosted/",
@@ -2302,8 +2299,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/Cardigann",
-          "container": "/config"
+          "container": "/config",
+          "bind": "/portainer/Files/AppData/Config/Cardigann"
         }
       ],
       "maintainer": "https://github.com/SelfhostedPro/selfhosted_templates/",
@@ -2614,8 +2611,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/Chowdown",
-          "container": "/config"
+          "container": "/config",
+          "bind": "/portainer/Files/AppData/Config/Chowdown"
         }
       ],
       "maintainer": "https://github.com/mikestraney/portainer-templates/",
@@ -2776,20 +2773,20 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/etc/timezone",
-          "container": "/etc/timezone"
+          "container": "/etc/timezone",
+          "bind": "/etc/timezone"
         },
         {
-          "bind": "/etc/localtime",
-          "container": "/etc/localtime"
+          "container": "/etc/localtime",
+          "bind": "/etc/localtime"
         },
         {
-          "bind": "/portainer/Files/AppData/Config/clamav/config",
-          "container": "/etc/clamav"
+          "container": "/etc/clamav",
+          "bind": "/portainer/Files/AppData/Config/clamav/config"
         },
         {
-          "bind": "/portainer/Files/AppData/Config/clamav/virus_definitions",
-          "container": "/var/lib/clamav"
+          "container": "/var/lib/clamav",
+          "bind": "/portainer/Files/AppData/Config/clamav/virus_definitions"
         }
       ],
       "note": "<b>Template created by Pi-Hosted Series</b><br><b>Check our Github page: <a href=\"https://github.com/pi-hosted/pi-hosted\" target=\"_blank\">https://github.com/pi-hosted/pi-hosted</a></b><br><br><b>Official Webpage: </b><a href=\"https://docs.clamav.net/\" target=\"_blank\">https://docs.clamav.net/</a><br><b>Official Docker Documentation: </b><a href=\"https://hub.docker.com/r/mkodockx/docker-clamav\" target=\"_blank\">https://hub.docker.com/r/mkodockx/docker-clamav</a><br><br><h3><b><a href=\"https://github.com/pi-hosted/pi-hosted/blob/master/tools/install_clamav.sh\" target=\"_blank\">Pre-installation script</a> must be RAN before you install: </b>wget -qO- https://raw.githubusercontent.com/pi-hosted/pi-hosted/master/tools/install_clamav.sh | bash</h3><br><br>",
@@ -3205,8 +3202,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/Codiad",
-          "container": "/config"
+          "container": "/config",
+          "bind": "/portainer/Files/AppData/Config/Codiad"
         }
       ],
       "maintainer": "https://github.com/mikestraney/portainer-templates/",
@@ -3549,12 +3546,12 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/Daapd",
-          "container": "/config"
+          "container": "/config",
+          "bind": "/portainer/Files/AppData/Config/Daapd"
         },
         {
-          "bind": "/portainer/Music",
-          "container": "/music"
+          "container": "/music",
+          "bind": "/portainer/Music"
         }
       ],
       "maintainer": "https://github.com/mikestraney/portainer-templates/",
@@ -3672,8 +3669,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/Dashmachine",
-          "container": "/dashmachine/dashmachine/user_data"
+          "container": "/dashmachine/dashmachine/user_data",
+          "bind": "/portainer/Files/AppData/Config/Dashmachine"
         }
       ],
       "note": "<b>Template created by Pi-Hosted Series</b><br><b>Check our Github page: <a href=\"https://github.com/pi-hosted/pi-hosted\" target=\"_blank\">https://github.com/pi-hosted/pi-hosted</a></b><br><br><b>Official Webpage: </b><a href=\"https://github.com/rmountjoy92/DashMachine\" target=\"_blank\">https://github.com/rmountjoy92/DashMachine</a><br><b>Official Docker Documentation: </b><a href=\"https://github.com/rmountjoy92/DashMachine\" target=\"_blank\">https://github.com/rmountjoy92/DashMachine</a><br><br><br>",
@@ -3709,8 +3706,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/Dashy/local-conf.yml",
-          "container": "/app/public/conf.yml"
+          "container": "/app/public/conf.yml",
+          "bind": "/portainer/Files/AppData/Config/Dashy/local-conf.yml"
         }
       ],
       "note": "<b>Template created by Pi-Hosted Series</b><br><b>Check our Github page: <a href=\"https://github.com/pi-hosted/pi-hosted\" target=\"_blank\">https://github.com/pi-hosted/pi-hosted</a></b><br><br><b>Official Webpage: </b><a href=\"https://dashy.to\" target=\"_blank\">https://dashy.to</a><br><b>Official Docker Documentation: </b><a href=\"https://dashy.to/docs/quick-start\" target=\"_blank\">https://dashy.to/docs/quick-start</a><br><br><h3><b><a href=\"https://github.com/pi-hosted/pi-hosted/blob/master/tools/install_dashy.sh\" target=\"_blank\">Pre-installation script</a> must be RAN before you install: </b>wget -qO- https://raw.githubusercontent.com/pi-hosted/pi-hosted/master/tools/install_dashy.sh | bash</h3><br><br>",
@@ -3876,8 +3873,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/DavinciServer/",
-          "container": "/var/lib/postgresql/data"
+          "container": "/var/lib/postgresql/data",
+          "bind": "/portainer/Files/AppData/Config/DavinciServer/"
         }
       ],
       "note": "<b>Template created by Pi-Hosted Series</b><br><b>Check our Github page: <a href=\"https://github.com/pi-hosted/pi-hosted\" target=\"_blank\">https://github.com/pi-hosted/pi-hosted</a></b><br><br><b>Official Webpage: </b><a href=\"https://raw.githubusercontent.com/pi-hosted/pi-hosted/master/docs/davinci.md\" target=\"_blank\">https://raw.githubusercontent.com/pi-hosted/pi-hosted/master/docs/davinci.md</a><br><b>Official Docker Documentation: </b><a href=\"https://raw.githubusercontent.com/pi-hosted/pi-hosted/master/docs/davinci.md\" target=\"_blank\">https://raw.githubusercontent.com/pi-hosted/pi-hosted/master/docs/davinci.md</a><br><br><br>",
@@ -4015,12 +4012,12 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/DeeMix",
-          "container": "/config"
+          "container": "/config",
+          "bind": "/portainer/Files/AppData/Config/DeeMix"
         },
         {
-          "bind": "/portainer/Downloads",
-          "container": "/downloads"
+          "container": "/downloads",
+          "bind": "/portainer/Downloads"
         }
       ],
       "maintainer": "https://github.com/mikestraney/portainer-templates/",
@@ -4128,16 +4125,16 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/etc/localtime",
-          "container": "/etc/localtime"
+          "container": "/etc/localtime",
+          "bind": "/etc/localtime"
         },
         {
-          "bind": "/portainer/Downloads",
-          "container": "/downloads"
+          "container": "/downloads",
+          "bind": "/portainer/Downloads"
         },
         {
-          "bind": "/portainer/Files/AppData/Config/DelugeOpenVPN/config",
-          "container": "/config"
+          "container": "/config",
+          "bind": "/portainer/Files/AppData/Config/DelugeOpenVPN/config"
         }
       ],
       "maintainer": "https://github.com/SelfhostedPro/selfhosted_templates/",
@@ -4343,7 +4340,6 @@
         "Knowledge Base"
       ],
       "description": "Documize Community is an open source, modern, self-hosted, enterprise-grade knowledge management solution.",
-      "logo": "",
       "name": "documize",
       "platform": "linux",
       "repository": {
@@ -4664,8 +4660,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/Domoticz",
-          "container": "/config"
+          "container": "/config",
+          "bind": "/portainer/Files/AppData/Config/Domoticz"
         }
       ],
       "maintainer": "https://github.com/mikestraney/portainer-templates/",
@@ -5397,16 +5393,16 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/eclipse-mosquitto/config",
-          "container": "/mosquitto/config"
+          "container": "/mosquitto/config",
+          "bind": "/portainer/Files/AppData/Config/eclipse-mosquitto/config"
         },
         {
-          "bind": "/portainer/Files/AppData/Config/eclipse-mosquitto/data",
-          "container": "/mosquitto/data"
+          "container": "/mosquitto/data",
+          "bind": "/portainer/Files/AppData/Config/eclipse-mosquitto/data"
         },
         {
-          "bind": "/portainer/Files/AppData/Config/eclipse-mosquitto/log",
-          "container": "/mosquitto/log"
+          "container": "/mosquitto/log",
+          "bind": "/portainer/Files/AppData/Config/eclipse-mosquitto/log"
         }
       ],
       "note": "<b>Template created by Pi-Hosted Series</b><br><b>Check our Github page: <a href=\"https://github.com/pi-hosted/pi-hosted\" target=\"_blank\">https://github.com/pi-hosted/pi-hosted</a></b><br><br><b>Official Webpage: </b><a href=\"https://mosquitto.org/\" target=\"_blank\">https://mosquitto.org/</a><br><b>Official Docker Documentation: </b><a href=\"https://mosquitto.org/\" target=\"_blank\">https://mosquitto.org/</a><br><br><h3><b><a href=\"https://github.com/pi-hosted/pi-hosted/blob/master/tools/install_mosquitto.sh\" target=\"_blank\">Pre-installation script</a> must be RAN before you install: </b>wget -qO- https://raw.githubusercontent.com/pi-hosted/pi-hosted/master/tools/install_mosquitto.sh | bash</h3><br><br>",
@@ -5560,8 +5556,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/EmbyStat",
-          "container": "/config"
+          "container": "/config",
+          "bind": "/portainer/Files/AppData/Config/EmbyStat"
         }
       ],
       "maintainer": "https://github.com/mikestraney/portainer-templates/",
@@ -5622,8 +5618,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/eufy-security-ws",
-          "container": "/data"
+          "container": "/data",
+          "bind": "/portainer/Files/AppData/Config/eufy-security-ws"
         }
       ],
       "maintainer": "https://github.com/xneo1/portainer_templates/",
@@ -5783,7 +5779,6 @@
         "Machine Learning"
       ],
       "platform": "linux",
-      "logo": "",
       "image": "linuxserver/faster-whisper:latest",
       "env": [
         {
@@ -5876,7 +5871,6 @@
         "News"
       ],
       "description": "FeedCord is a dead-simple RSS Reader designed to integrate seamlessly with Discord. With just a few configuration steps, you can have a news feed text channel up and running in your server.",
-      "logo": "",
       "name": "feedcord",
       "platform": "linux",
       "repository": {
@@ -6174,16 +6168,16 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Downloads",
-          "container": "/srv"
+          "container": "/srv",
+          "bind": "/portainer/Downloads"
         },
         {
-          "bind": "/portainer/Files/AppData/Config/filebrowser/filebrowser.db",
-          "container": "/database/filebrowser.db"
+          "container": "/database/filebrowser.db",
+          "bind": "/portainer/Files/AppData/Config/filebrowser/filebrowser.db"
         },
         {
-          "bind": "/portainer/Files/AppData/Config/filebrowser/settings.json",
-          "container": "/config/settings.json"
+          "container": "/config/settings.json",
+          "bind": "/portainer/Files/AppData/Config/filebrowser/settings.json"
         }
       ],
       "maintainer": "https://github.com/novaspirit/pi-hosted/",
@@ -6220,16 +6214,16 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Downloads",
-          "container": "/srv"
+          "container": "/srv",
+          "bind": "/portainer/Downloads"
         },
         {
-          "bind": "/portainer/Files/AppData/Config/filebrowser/filebrowser.db",
-          "container": "/database/filebrowser.db"
+          "container": "/database/filebrowser.db",
+          "bind": "/portainer/Files/AppData/Config/filebrowser/filebrowser.db"
         },
         {
-          "bind": "/portainer/Files/AppData/Config/filebrowser/settings.json",
-          "container": "/config/settings.json"
+          "container": "/config/settings.json",
+          "bind": "/portainer/Files/AppData/Config/filebrowser/settings.json"
         }
       ],
       "maintainer": "https://github.com/novaspirit/pi-hosted/",
@@ -6462,12 +6456,12 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/Flame/data",
-          "container": "/app/data"
+          "container": "/app/data",
+          "bind": "/portainer/Files/AppData/Config/Flame/data"
         },
         {
-          "bind": "/var/run/docker.sock",
-          "container": "/var/run/docker.sock"
+          "container": "/var/run/docker.sock",
+          "bind": "/var/run/docker.sock"
         }
       ],
       "note": "<b>Template created by Pi-Hosted Series</b><br><b>Check our Github page: <a href=\"https://github.com/pi-hosted/pi-hosted\" target=\"_blank\">https://github.com/pi-hosted/pi-hosted</a></b><br><br><b>Official Webpage: </b><a href=\"https://github.com/pawelmalak/flame\" target=\"_blank\">https://github.com/pawelmalak/flame</a><br><b>Official Docker Documentation: </b><a href=\"https://github.com/pawelmalak/flame#with-docker-recommended\" target=\"_blank\">https://github.com/pawelmalak/flame#with-docker-recommended</a><br><br><br>",
@@ -6492,8 +6486,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/flame-dashboard",
-          "container": "/app/data"
+          "container": "/app/data",
+          "bind": "/portainer/Files/AppData/Config/flame-dashboard"
         }
       ],
       "maintainer": "https://github.com/xneo1/portainer_templates/",
@@ -6857,8 +6851,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/foundryvtt",
-          "container": "/data"
+          "container": "/data",
+          "bind": "/portainer/Files/AppData/Config/foundryvtt"
         }
       ],
       "note": "<b>Template created by Pi-Hosted Series</b><br><b>Check our Github page: <a href=\"https://github.com/pi-hosted/pi-hosted\" target=\"_blank\">https://github.com/pi-hosted/pi-hosted</a></b><br><br><b>Official Webpage: </b><a href=\"https://foundryvtt.com/\" target=\"_blank\">https://foundryvtt.com/</a><br><b>Official Docker Documentation: </b><a href=\"https://hub.docker.com/r/felddy/foundryvtt\" target=\"_blank\">https://hub.docker.com/r/felddy/foundryvtt</a><br><br><br>",
@@ -7036,7 +7030,6 @@
         "RSS"
       ],
       "description": "A lightweight RSS feed aggregator and reader.",
-      "logo": "",
       "name": "fusion",
       "platform": "linux",
       "repository": {
@@ -7524,8 +7517,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/Ghost",
-          "container": "/var/lib/ghost/content"
+          "container": "/var/lib/ghost/content",
+          "bind": "/portainer/Files/AppData/Config/Ghost"
         }
       ],
       "note": "<b>Template created by Pi-Hosted Series</b><br><b>Check our Github page: <a href=\"https://github.com/pi-hosted/pi-hosted\" target=\"_blank\">https://github.com/pi-hosted/pi-hosted</a></b><br><br><b>Official Webpage: </b><a href=\"https://github.com/docker-library/docs/tree/master/ghost\" target=\"_blank\">https://github.com/docker-library/docs/tree/master/ghost</a><br><b>Official Docker Documentation: </b><a href=\"https://hub.docker.com/_/ghost\" target=\"_blank\">https://hub.docker.com/_/ghost</a><br><br><br>",
@@ -7678,16 +7671,16 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/Gitea",
-          "container": "/data"
+          "container": "/data",
+          "bind": "/portainer/Files/AppData/Config/Gitea"
         },
         {
-          "bind": " /etc/timezone",
-          "container": "/etc/timezone:ro"
+          "container": "/etc/timezone:ro",
+          "bind": " /etc/timezone"
         },
         {
-          "bind": "/etc/localtime",
-          "container": "/etc/localtime:ro"
+          "container": "/etc/localtime:ro",
+          "bind": "/etc/localtime"
         }
       ],
       "maintainer": "https://github.com/Qballjos/portainer_templates/",
@@ -7881,7 +7874,6 @@
         "Personal Finance"
       ],
       "description": "Golang-based web application for personal expense management, focused on a clean monthly workflow and intuitive tracking of recurring and non-recurring costs.",
-      "logo": "",
       "name": "gocostweb",
       "platform": "linux",
       "repository": {
@@ -7965,8 +7957,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/gotify",
-          "container": "/app/data"
+          "container": "/app/data",
+          "bind": "/portainer/Files/AppData/Config/gotify"
         }
       ],
       "maintainer": "https://github.com/novaspirit/pi-hosted/",
@@ -8177,8 +8169,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/Guacamole",
-          "container": "/config"
+          "container": "/config",
+          "bind": "/portainer/Files/AppData/Config/Guacamole"
         }
       ],
       "maintainer": "https://github.com/mikestraney/portainer-templates/",
@@ -8333,7 +8325,6 @@
         "Productivity"
       ],
       "description": "Hasty Paste is a fast and minimal paste bin, written in Python using Quart.",
-      "logo": "",
       "name": "hasty-paste",
       "platform": "linux",
       "repository": {
@@ -8391,16 +8382,16 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/Headphones",
-          "container": "/config"
+          "container": "/config",
+          "bind": "/portainer/Files/AppData/Config/Headphones"
         },
         {
-          "bind": "/portainer/Downloads",
-          "container": "/Downloads"
+          "container": "/Downloads",
+          "bind": "/portainer/Downloads"
         },
         {
-          "bind": "/portainer/Music",
-          "container": "/music"
+          "container": "/music",
+          "bind": "/portainer/Music"
         }
       ],
       "maintainer": "https://github.com/Qballjos/portainer_templates/",
@@ -8912,16 +8903,16 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/var/run/docker.sock",
-          "container": "/var/run/docker.sock"
+          "container": "/var/run/docker.sock",
+          "bind": "/var/run/docker.sock"
         },
         {
-          "bind": "/portainer/Files/AppData/Config/Homarr/configs",
-          "container": "/app/data/configs"
+          "container": "/app/data/configs",
+          "bind": "/portainer/Files/AppData/Config/Homarr/configs"
         },
         {
-          "bind": "/portainer/Files/AppData/Config/Homarr/icons",
-          "container": "/app/public/icons"
+          "container": "/app/public/icons",
+          "bind": "/portainer/Files/AppData/Config/Homarr/icons"
         }
       ],
       "maintainer": "https://github.com/novaspirit/pi-hosted/",
@@ -8976,12 +8967,12 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/Homarr/configs",
-          "container": "/app/data/configs"
+          "container": "/app/data/configs",
+          "bind": "/portainer/Files/AppData/Config/Homarr/configs"
         },
         {
-          "bind": "/portainer/Files/AppData/Config/Homarr/icons",
-          "container": "/app/public/icons"
+          "container": "/app/public/icons",
+          "bind": "/portainer/Files/AppData/Config/Homarr/icons"
         }
       ],
       "maintainer": "https://github.com/novaspirit/pi-hosted/",
@@ -9101,8 +9092,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/homebridge",
-          "container": "/homebridge"
+          "container": "/homebridge",
+          "bind": "/portainer/Files/AppData/Config/homebridge"
         }
       ],
       "maintainer": "https://github.com/novaspirit/pi-hosted/",
@@ -9169,8 +9160,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/debian-homebridge",
-          "container": "/homebridge"
+          "container": "/homebridge",
+          "bind": "/portainer/Files/AppData/Config/debian-homebridge"
         }
       ],
       "maintainer": "https://github.com/novaspirit/pi-hosted/",
@@ -9224,8 +9215,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/var/run/docker.sock",
           "container": "/var/run/docker.sock",
+          "bind": "/var/run/docker.sock",
           "readonly": true
         },
         {
@@ -9349,12 +9340,12 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/Homer/assets",
-          "container": "/www/assets"
+          "container": "/www/assets",
+          "bind": "/portainer/Files/AppData/Config/Homer/assets"
         },
         {
-          "bind": "/portainer/Files/AppData/Config/Homer",
-          "container": "/www/config.yml"
+          "container": "/www/config.yml",
+          "bind": "/portainer/Files/AppData/Config/Homer"
         }
       ],
       "maintainer": "https://github.com/Qballjos/portainer_templates/",
@@ -9444,8 +9435,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/huginn",
-          "container": "/var/lib/mysql"
+          "container": "/var/lib/mysql",
+          "bind": "/portainer/Files/AppData/Config/huginn"
         }
       ],
       "note": "<b>Template created by Pi-Hosted Series</b><br><b>Check our Github page: <a href=\"https://github.com/pi-hosted/pi-hosted\" target=\"_blank\">https://github.com/pi-hosted/pi-hosted</a></b><br><br><b>Official Webpage: </b><a href=\"https://github.com/huginn/huginn\" target=\"_blank\">https://github.com/huginn/huginn</a><br><b>Official Docker Documentation: </b><a href=\"https://github.com/huginn/huginn/tree/master/docker\" target=\"_blank\">https://github.com/huginn/huginn/tree/master/docker</a><br><br><br>",
@@ -9503,7 +9494,6 @@
         "Finance"
       ],
       "description": "I hate money is a web application made to ease shared budget management. It keeps track of who bought what, when, and for whom; and helps to settle the bills.",
-      "logo": "",
       "name": "ihatemoney",
       "platform": "linux",
       "repository": {
@@ -9963,12 +9953,12 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/Influxdb/data",
-          "container": "/var/lib/influxdb"
+          "container": "/var/lib/influxdb",
+          "bind": "/portainer/Files/AppData/Config/Influxdb/data"
         },
         {
-          "bind": "/portainer/Files/AppData/Config/Influxdb/config",
-          "container": "/etc/influxdb"
+          "container": "/etc/influxdb",
+          "bind": "/portainer/Files/AppData/Config/Influxdb/config"
         }
       ],
       "maintainer": "https://github.com/novaspirit/pi-hosted/",
@@ -10245,8 +10235,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/iobrokerdata",
-          "container": "/opt/iobroker"
+          "container": "/opt/iobroker",
+          "bind": "/portainer/Files/AppData/Config/iobrokerdata"
         }
       ],
       "note": "<b>Template created by Pi-Hosted Series</b><br><b>Check our Github page: <a href=\"https://github.com/pi-hosted/pi-hosted\" target=\"_blank\">https://github.com/pi-hosted/pi-hosted</a></b><br><br><b>Official Webpage: </b><a href=\"https://github.com/buanet/ioBroker.docker\" target=\"_blank\">https://github.com/buanet/ioBroker.docker</a><br><b>Official Docker Documentation: </b><a href=\"https://github.com/buanet/ioBroker.docker\" target=\"_blank\">https://github.com/buanet/ioBroker.docker</a><br><br><br>",
@@ -10258,7 +10248,6 @@
         "Network"
       ],
       "description": "IPerf3 Docker Build for Network Performance and Bandwidth Testing",
-      "logo": "",
       "name": "iperf",
       "platform": "linux",
       "repository": {
@@ -10452,12 +10441,12 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/JDownloader",
-          "container": "/opt/JDownloader/app/cfg"
+          "container": "/opt/JDownloader/app/cfg",
+          "bind": "/portainer/Files/AppData/Config/JDownloader"
         },
         {
-          "bind": "/portainer/Downloads",
-          "container": "/opt/JDownloader/Downloads"
+          "container": "/opt/JDownloader/Downloads",
+          "bind": "/portainer/Downloads"
         }
       ],
       "note": "<b>Template created by Pi-Hosted Series</b><br><b>Check our Github page: <a href=\"https://github.com/pi-hosted/pi-hosted\" target=\"_blank\">https://github.com/pi-hosted/pi-hosted</a></b><br><br><b>Official Webpage: </b><a href=\"https://my.jdownloader.org/\" target=\"_blank\">https://my.jdownloader.org/</a><br><b>Official Docker Documentation: </b><a href=\"https://github.com/jaymoulin/docker-jdownloader\" target=\"_blank\">https://github.com/jaymoulin/docker-jdownloader</a><br><br><br><b>Youtube Video: </b><a href=https://www.youtube.com/watch?v=30MYRgCObu8&list=PL846hFPMqg3jwkxcScD1xw2bKXrJVvarc&index=4 target=\"_blank\">Novaspirit Tech - Installing JDownloader and File Browser On The Pi Docker Server</a><br><br>",
@@ -10550,16 +10539,16 @@
       ],
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/Jelllyfin",
-          "container": "/jf"
+          "container": "/jf",
+          "bind": "/portainer/Files/AppData/Config/Jelllyfin"
         },
         {
-          "bind": "/portainer/Files/AppData/Config/jfago",
-          "container": "/data"
+          "container": "/data",
+          "bind": "/portainer/Files/AppData/Config/jfago"
         },
         {
-          "bind": "/etc/localtime",
           "container": "/etc/localtime",
+          "bind": "/etc/localtime",
           "readonly": true
         }
       ],
@@ -10613,8 +10602,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/Jellyseerr",
-          "container": "/app/config"
+          "container": "/app/config",
+          "bind": "/portainer/Files/AppData/Config/Jellyseerr"
         }
       ],
       "maintainer": "https://github.com/Qballjos/portainer_templates/",
@@ -10730,7 +10719,6 @@
         "Dashboard"
       ],
       "description": "Jump is yet another self-hosted startpage for your server designed to be simple, stylish, fast and secure.",
-      "logo": "",
       "name": "jump",
       "platform": "linux",
       "repository": {
@@ -10795,7 +10783,6 @@
         "Comics"
       ],
       "description": "Kapowarr is a software to build and manage a comic book library, fitting in the *arr suite of software.",
-      "logo": "",
       "name": "kapowarr",
       "platform": "linux",
       "repository": {
@@ -11270,8 +11257,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/Kodi",
-          "container": "/config/.kodi"
+          "container": "/config/.kodi",
+          "bind": "/portainer/Files/AppData/Config/Kodi"
         }
       ],
       "note": "<b>Template created by Pi-Hosted Series</b><br><b>Check our Github page: <a href=\"https://github.com/pi-hosted/pi-hosted\" target=\"_blank\">https://github.com/pi-hosted/pi-hosted</a></b><br><br><b>Official Webpage: </b><a href=\"https://kodi.tv/\" target=\"_blank\">https://kodi.tv/</a><br><b>Official Docker Documentation: </b><a href=\"https://hub.docker.com/r/lsioarmhf/kodi-headless-aarch64/\" target=\"_blank\">https://hub.docker.com/r/lsioarmhf/kodi-headless-aarch64/</a><br><br><br>",
@@ -11404,16 +11391,16 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/komga/config",
-          "container": "/config"
+          "container": "/config",
+          "bind": "/portainer/Files/AppData/Config/komga/config"
         },
         {
-          "bind": "/portainer/Files/AppData/Config/komga/data",
-          "container": "/data"
+          "container": "/data",
+          "bind": "/portainer/Files/AppData/Config/komga/data"
         },
         {
-          "bind": "/etc/timezone",
           "container": "/etc/timezone",
+          "bind": "/etc/timezone",
           "readonly": true
         }
       ],
@@ -11531,7 +11518,6 @@
         "Docker"
       ],
       "description": "Lazytainer monitors network traffic to containers. If there is traffic, the container runs, otherwise the container is stopped/paused.",
-      "logo": "",
       "name": "lazytainer",
       "platform": "linux",
       "repository": {
@@ -11698,8 +11684,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/LetsEncrypt",
-          "container": "/config"
+          "container": "/config",
+          "bind": "/portainer/Files/AppData/Config/LetsEncrypt"
         }
       ],
       "maintainer": "https://github.com/SelfhostedPro/selfhosted_templates/",
@@ -11779,8 +11765,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/LetsEncrypt",
-          "container": "/config"
+          "container": "/config",
+          "bind": "/portainer/Files/AppData/Config/LetsEncrypt"
         }
       ],
       "maintainer": "https://github.com/Qballjos/portainer_templates/",
@@ -11804,8 +11790,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/libreddit",
-          "container": "/config"
+          "container": "/config",
+          "bind": "/portainer/Files/AppData/Config/libreddit"
         }
       ],
       "note": "<b>Template created by Pi-Hosted Series</b><br><b>Check our Github page: <a href=\"https://github.com/pi-hosted/pi-hosted\" target=\"_blank\">https://github.com/pi-hosted/pi-hosted</a></b><br><br><b>Official Webpage: </b><a href=\"https://libreddit.silkky.cloud/\" target=\"_blank\">https://libreddit.silkky.cloud/</a><br><b>Official Docker Documentation: </b><a href=\"https://github.com/spikecodes/libreddit#2-docker\" target=\"_blank\">https://github.com/spikecodes/libreddit#2-docker</a><br><br><br>",
@@ -12403,8 +12389,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/lldap/data",
-          "container": "/data"
+          "container": "/data",
+          "bind": "/portainer/Files/AppData/Config/lldap/data"
         }
       ],
       "note": "<b>Template created by Pi-Hosted Series</b><br><b>Check our Github page: <a href=\"https://github.com/pi-hosted/pi-hosted\" target=\"_blank\">https://github.com/pi-hosted/pi-hosted</a></b><br><br><b>Official Webpage: </b><a href=\"https://github.com/nitnelave/lldap\" target=\"_blank\">https://github.com/nitnelave/lldap</a><br><b>Official Docker Documentation: </b><a href=\"https://github.com/nitnelave/lldap\" target=\"_blank\">https://github.com/nitnelave/lldap</a><br><br><h3><b><a href=\"https://github.com/pi-hosted/pi-hosted/blob/master/tools/install_lldap.sh\" target=\"_blank\">Pre-installation script</a> must be RAN before you install: </b>wget -qO- https://raw.githubusercontent.com/pi-hosted/pi-hosted/master/tools/install_lldap.sh | bash</h3><br><br>",
@@ -12886,8 +12872,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/Maloja/Data",
-          "container": "/data"
+          "container": "/data",
+          "bind": "/portainer/Files/AppData/Config/Maloja/Data"
         }
       ],
       "note": "<b>Template created by Pi-Hosted Series</b><br><b>Check our Github page: <a href=\"https://github.com/pi-hosted/pi-hosted\" target=\"_blank\">https://github.com/pi-hosted/pi-hosted</a></b><br><br><b>Official Webpage: </b><a href=\"https://github.com/krateng/maloja\" target=\"_blank\">https://github.com/krateng/maloja</a><br><b>Official Docker Documentation: </b><a href=\"https://github.com/krateng/maloja/blob/master/README.md\" target=\"_blank\">https://github.com/krateng/maloja/blob/master/README.md</a><br><br><h3><b><a href=\"https://github.com/pi-hosted/pi-hosted/blob/master/tools/install_maloja.sh\" target=\"_blank\">Pre-installation script</a> must be RAN before you install: </b>wget -qO- https://raw.githubusercontent.com/pi-hosted/pi-hosted/master/tools/install_maloja.sh | bash</h3><br><br>",
@@ -13130,7 +13116,6 @@
         "Notes"
       ],
       "description": "Markopolis is like the self hosted version of Obsidian Publish.",
-      "logo": "",
       "name": "markopolis",
       "platform": "linux",
       "repository": {
@@ -13147,7 +13132,6 @@
         "News"
       ],
       "description": "Marreta is a tool that breaks down access barriers and elements that hinder reading!",
-      "logo": "",
       "name": "marreta",
       "platform": "linux",
       "repository": {
@@ -13648,8 +13632,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/mealie",
-          "container": "/app/data"
+          "container": "/app/data",
+          "bind": "/portainer/Files/AppData/Config/mealie"
         }
       ],
       "maintainer": "https://github.com/novaspirit/pi-hosted/",
@@ -13897,8 +13881,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Downloads",
-          "container": "/downloads"
+          "container": "/downloads",
+          "bind": "/portainer/Downloads"
         }
       ],
       "note": "<b>Template created by Pi-Hosted Series</b><br><b>Check our Github page: <a href=\"https://github.com/pi-hosted/pi-hosted\" target=\"_blank\">https://github.com/pi-hosted/pi-hosted</a></b><br><br><b>Official Webpage: </b><a href=\"https://hub.docker.com/r/alexta69/metube\" target=\"_blank\">https://hub.docker.com/r/alexta69/metube</a><br><b>Official Docker Documentation: </b><a href=\"https://github.com/alexta69/metube\" target=\"_blank\">https://github.com/alexta69/metube</a><br><br><br>",
@@ -13976,8 +13960,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/Minecraft-data",
-          "container": "/data"
+          "container": "/data",
+          "bind": "/portainer/Files/AppData/Config/Minecraft-data"
         }
       ],
       "note": "<b>Template created by Pi-Hosted Series</b><br><b>Check our Github page: <a href=\"https://github.com/pi-hosted/pi-hosted\" target=\"_blank\">https://github.com/pi-hosted/pi-hosted</a></b><br><br><b>Official Webpage: </b><a href=\"https://www.minecraft.net/en-us\" target=\"_blank\">https://www.minecraft.net/en-us</a><br><b>Official Docker Documentation: </b><a href=\"https://github.com/itzg/docker-minecraft-server#using-docker-compose\" target=\"_blank\">https://github.com/itzg/docker-minecraft-server#using-docker-compose</a><br><br><br>",
@@ -14024,7 +14008,6 @@
         "Feed Reader"
       ],
       "description": "Miniflux is a minimalist and opinionated feed reader.",
-      "logo": "",
       "name": "miniflux",
       "platform": "linux",
       "repository": {
@@ -14084,8 +14067,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/MinIO",
-          "container": "/data"
+          "container": "/data",
+          "bind": "/portainer/Files/AppData/Config/MinIO"
         }
       ],
       "note": "<b>Template created by Pi-Hosted Series</b><br><b>Check our Github page: <a href=\"https://github.com/pi-hosted/pi-hosted\" target=\"_blank\">https://github.com/pi-hosted/pi-hosted</a></b><br><br><b>Official Webpage: </b><a href=\"https://min.io/\" target=\"_blank\">https://min.io/</a><br><b>Official Docker Documentation: </b><a href=\"https://docs.min.io/minio/baremetal/quickstart/quickstart.html\" target=\"_blank\">https://docs.min.io/minio/baremetal/quickstart/quickstart.html</a><br><br><br>",
@@ -14555,20 +14538,20 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/etc/localtime:ro",
-          "container": "/etc/localtime"
+          "container": "/etc/localtime",
+          "bind": "/etc/localtime:ro"
         },
         {
-          "bind": "/portainer/Files/Config/Murmur",
-          "container": "/opt/murmur/config"
+          "container": "/opt/murmur/config",
+          "bind": "/portainer/Files/Config/Murmur"
         },
         {
-          "bind": "/portainer/Files/Murmur/data",
-          "container": "/opt/murmur/data"
+          "container": "/opt/murmur/data",
+          "bind": "/portainer/Files/Murmur/data"
         },
         {
-          "bind": "/portainer/Files/Murmur/log",
-          "container": "/opt/murmur/log"
+          "container": "/opt/murmur/log",
+          "bind": "/portainer/Files/Murmur/log"
         }
       ],
       "note": "<b>Template created by Pi-Hosted Series</b><br><b>Check our Github page: <a href=\"https://github.com/pi-hosted/pi-hosted\" target=\"_blank\">https://github.com/pi-hosted/pi-hosted</a></b><br><br><b>Official Webpage: </b><a href=\"https://www.mumble.info/\" target=\"_blank\">https://www.mumble.info/</a><br><b>Official Docker Documentation: </b><a href=\"https://github.com/yhaenggi/murmur-docker\" target=\"_blank\">https://github.com/yhaenggi/murmur-docker</a><br><br><br>",
@@ -14665,8 +14648,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/Muximux",
-          "container": "/config"
+          "container": "/config",
+          "bind": "/portainer/Files/AppData/Config/Muximux"
         }
       ],
       "maintainer": "https://github.com/mikestraney/portainer-templates/",
@@ -14702,16 +14685,16 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/Mylar",
-          "container": "/config"
+          "container": "/config",
+          "bind": "/portainer/Files/AppData/Config/Mylar"
         },
         {
-          "bind": "/portainer/Downloads",
-          "container": "/downloads"
+          "container": "/downloads",
+          "bind": "/portainer/Downloads"
         },
         {
-          "bind": "/portainer/Comics",
-          "container": "/comics"
+          "container": "/comics",
+          "bind": "/portainer/Comics"
         }
       ],
       "maintainer": "https://github.com/mikestraney/portainer-templates/",
@@ -14885,8 +14868,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/n8n",
-          "container": "/home/node/.n8n"
+          "container": "/home/node/.n8n",
+          "bind": "/portainer/Files/AppData/Config/n8n"
         }
       ],
       "maintainer": "https://github.com/novaspirit/pi-hosted/",
@@ -15269,32 +15252,32 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/netdata/netdataconfig",
-          "container": "/etc/netdata"
+          "container": "/etc/netdata",
+          "bind": "/portainer/Files/AppData/Config/netdata/netdataconfig"
         },
         {
-          "bind": "/portainer/Files/AppData/Config/netdata/netdatalib",
-          "container": "/var/lib/netdata"
+          "container": "/var/lib/netdata",
+          "bind": "/portainer/Files/AppData/Config/netdata/netdatalib"
         },
         {
-          "bind": "/etc/passwd",
-          "container": "/host/etc/passwd:ro"
+          "container": "/host/etc/passwd:ro",
+          "bind": "/etc/passwd"
         },
         {
-          "bind": "/etc/group",
-          "container": "/host/etc/group:ro"
+          "container": "/host/etc/group:ro",
+          "bind": "/etc/group"
         },
         {
-          "bind": "/proc",
-          "container": "/host/proc:ro"
+          "container": "/host/proc:ro",
+          "bind": "/proc"
         },
         {
-          "bind": "/sys",
-          "container": "/host/sys:ro"
+          "container": "/host/sys:ro",
+          "bind": "/sys"
         },
         {
-          "bind": "/etc/os-release",
-          "container": "/host/etc/os-release:ro"
+          "container": "/host/etc/os-release:ro",
+          "bind": "/etc/os-release"
         }
       ],
       "maintainer": "https://github.com/novaspirit/pi-hosted/",
@@ -15581,12 +15564,12 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/Nginx-Proxy/data",
-          "container": "/data"
+          "container": "/data",
+          "bind": "/portainer/Files/AppData/Config/Nginx-Proxy/data"
         },
         {
-          "bind": "/portainer/Files/AppData/Config/Nginx-Proxy/letsencrypt",
-          "container": "/etc/letsencrypt"
+          "container": "/etc/letsencrypt",
+          "bind": "/portainer/Files/AppData/Config/Nginx-Proxy/letsencrypt"
         }
       ],
       "maintainer": "https://github.com/mikestraney/portainer-templates/",
@@ -15720,12 +15703,12 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/nginx-proxy-manager/data",
-          "container": "/data"
+          "container": "/data",
+          "bind": "/portainer/Files/AppData/Config/nginx-proxy-manager/data"
         },
         {
-          "bind": "/portainer/Files/AppData/Config/nginx-proxy-manager/letsencrypt",
-          "container": "/etc/letsencrypt"
+          "container": "/etc/letsencrypt",
+          "bind": "/portainer/Files/AppData/Config/nginx-proxy-manager/letsencrypt"
         }
       ],
       "note": "<b>Template created by Pi-Hosted Series</b><br><b>Check our Github page: <a href=\"https://github.com/pi-hosted/pi-hosted\" target=\"_blank\">https://github.com/pi-hosted/pi-hosted</a></b><br><br><b>Official Webpage: </b><a href=\"https://nginxproxymanager.com/\" target=\"_blank\">https://nginxproxymanager.com/</a><br><b>Official Docker Documentation: </b><a href=\"https://nginxproxymanager.com/setup/\" target=\"_blank\">https://nginxproxymanager.com/setup/</a><br><h3><b>Pi-Hosted dedicated documentation: </b><a href=\"https://github.com/pi-hosted/pi-hosted/blob/master/docs/nginx_proxy_manager.md\" target=\"_blank\">nginx_proxy_manager.md</a></h3><br><br><br><b>Youtube Video: </b><a href=https://www.youtube.com/watch?v=yl2Laxbqvo8&list=PL846hFPMqg3jwkxcScD1xw2bKXrJVvarc&index=10 target=\"_blank\">Novaspirit Tech - Installing Nginx Proxy Manager on Docker</a><br><br>",
@@ -15769,8 +15752,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/nginx-proxy-manager-v3/data",
-          "container": "/data"
+          "container": "/data",
+          "bind": "/portainer/Files/AppData/Config/nginx-proxy-manager-v3/data"
         }
       ],
       "note": "<b>Template created by Pi-Hosted Series</b><br><b>Check our Github page: <a href=\"https://github.com/pi-hosted/pi-hosted\" target=\"_blank\">https://github.com/pi-hosted/pi-hosted</a></b><br><br><b>Official Webpage: </b><a href=\"https://nginxproxymanager.com/\" target=\"_blank\">https://nginxproxymanager.com/</a><br><b>Official Docker Documentation: </b><a href=\"https://nginxproxymanager.com/setup/\" target=\"_blank\">https://nginxproxymanager.com/setup/</a><br><h3><b>Pi-Hosted dedicated documentation: </b><a href=\"https://github.com/pi-hosted/pi-hosted/blob/master/docs/nginx_proxy_manager.md\" target=\"_blank\">nginx_proxy_manager.md</a></h3><br><br><br><b>Youtube Video: </b><a href=https://www.youtube.com/watch?v=yl2Laxbqvo8&list=PL846hFPMqg3jwkxcScD1xw2bKXrJVvarc&index=10 target=\"_blank\">Novaspirit Tech - Installing Nginx Proxy Manager on Docker</a><br><br>",
@@ -16088,7 +16071,6 @@
       ],
       "description": "Network UPS Tools server",
       "image": "upshift/nut-upsd",
-      "logo": "",
       "name": "nuts",
       "platform": "linux",
       "ports": [
@@ -16099,8 +16081,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/nuts",
-          "container": "/app"
+          "container": "/app",
+          "bind": "/portainer/Files/AppData/Config/nuts"
         }
       ],
       "maintainer": "https://github.com/xneo1/portainer_templates/",
@@ -16293,12 +16275,12 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/OctoPrint",
-          "container": "/octoprint"
+          "container": "/octoprint",
+          "bind": "/portainer/Files/AppData/Config/OctoPrint"
         },
         {
-          "bind": "/dev",
-          "container": "/dev"
+          "container": "/dev",
+          "bind": "/dev"
         }
       ],
       "note": "<b>Template created by Pi-Hosted Series</b><br><b>Check our Github page: <a href=\"https://github.com/pi-hosted/pi-hosted\" target=\"_blank\">https://github.com/pi-hosted/pi-hosted</a></b><br><br><b>Official Webpage: </b><a href=\"https://octoprint.org/\" target=\"_blank\">https://octoprint.org/</a><br><b>Official Docker Documentation: </b><a href=\"https://hub.docker.com/r/octoprint/octoprint\" target=\"_blank\">https://hub.docker.com/r/octoprint/octoprint</a><br><br><br>",
@@ -16380,8 +16362,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/Omada",
-          "container": "/config"
+          "container": "/config",
+          "bind": "/portainer/Files/AppData/Config/Omada"
         }
       ],
       "note": "<b>Template created by Pi-Hosted Series</b><br><b>Check our Github page: <a href=\"https://github.com/pi-hosted/pi-hosted\" target=\"_blank\">https://github.com/pi-hosted/pi-hosted</a></b><br><br><b>Official Webpage: </b><a href=\"https://www.tp-link.com/us/business-networking/omada-sdn-controller/\" target=\"_blank\">https://www.tp-link.com/us/business-networking/omada-sdn-controller/</a><br><b>Official Docker Documentation: </b><a href=\"https://hub.docker.com/r/mbentley/omada-controller\" target=\"_blank\">https://hub.docker.com/r/mbentley/omada-controller</a><br><br><br>",
@@ -16814,8 +16796,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/OpenVPN-AS",
-          "container": "/config"
+          "container": "/config",
+          "bind": "/portainer/Files/AppData/Config/OpenVPN-AS"
         }
       ],
       "maintainer": "https://github.com/mikestraney/portainer-templates/",
@@ -17085,8 +17067,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/Organizr",
-          "container": "/config"
+          "container": "/config",
+          "bind": "/portainer/Files/AppData/Config/Organizr"
         }
       ],
       "maintainer": "https://github.com/mikestraney/portainer-templates/",
@@ -17140,8 +17122,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/Organizr",
-          "container": "/config"
+          "container": "/config",
+          "bind": "/portainer/Files/AppData/Config/Organizr"
         }
       ],
       "note": "<b>Template created by Pi-Hosted Series</b><br><b>Check our Github page: <a href=\"https://github.com/pi-hosted/pi-hosted\" target=\"_blank\">https://github.com/pi-hosted/pi-hosted</a></b><br><br><b>Official Webpage: </b><a href=\"https://organizr.app/\" target=\"_blank\">https://organizr.app/</a><br><b>Official Docker Documentation: </b><a href=\"https://hub.docker.com/r/organizr/organizr\" target=\"_blank\">https://hub.docker.com/r/organizr/organizr</a><br><br><br>",
@@ -17845,8 +17827,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Passky-Server",
-          "container": "/var/www/html/databases"
+          "container": "/var/www/html/databases",
+          "bind": "/portainer/Files/AppData/Passky-Server"
         }
       ],
       "maintainer": "https://github.com/Qballjos/portainer_templates/",
@@ -18049,8 +18031,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/pgadmin",
-          "container": "/var/lib/pgadmin"
+          "container": "/var/lib/pgadmin",
+          "bind": "/portainer/Files/AppData/Config/pgadmin"
         }
       ],
       "note": "<b>Template created by Pi-Hosted Series</b><br><b>Check our Github page: <a href=\"https://github.com/pi-hosted/pi-hosted\" target=\"_blank\">https://github.com/pi-hosted/pi-hosted</a></b><br><br><b>Official Webpage: </b><a href=\"https://www.pgadmin.org/\" target=\"_blank\">https://www.pgadmin.org/</a><br><b>Official Docker Documentation: </b><a href=\"https://www.pgadmin.org/docs/pgadmin4/latest/container_deployment.html\" target=\"_blank\">https://www.pgadmin.org/docs/pgadmin4/latest/container_deployment.html</a><br><br><h3><b><a href=\"https://github.com/pi-hosted/pi-hosted/blob/master/tools/install_pgadmin.sh\" target=\"_blank\">Pre-installation script</a> must be RAN before you install: </b>wget -qO- https://raw.githubusercontent.com/pi-hosted/pi-hosted/master/tools/install_pgadmin.sh | bash</h3><br><br>",
@@ -18104,16 +18086,16 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Pictures",
-          "container": "/Pictures"
+          "container": "/Pictures",
+          "bind": "/portainer/Pictures"
         },
         {
-          "bind": "/portainer/Files/AppData/Photoshow/Thumbs",
-          "container": "/Thumbs"
+          "container": "/Thumbs",
+          "bind": "/portainer/Files/AppData/Photoshow/Thumbs"
         },
         {
-          "bind": "/portainer/Files/AppData/Config/PhotoShow",
-          "container": "/config"
+          "container": "/config",
+          "bind": "/portainer/Files/AppData/Config/PhotoShow"
         }
       ],
       "maintainer": "https://github.com/mikestraney/portainer-templates/",
@@ -18199,12 +18181,12 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/PiHole",
-          "container": "/etc/pihole"
+          "container": "/etc/pihole",
+          "bind": "/portainer/Files/AppData/Config/PiHole"
         },
         {
-          "bind": "/portainer/Files/AppData/Config/PiHole/DNS",
-          "container": "/etc/dnsmasq.d"
+          "container": "/etc/dnsmasq.d",
+          "bind": "/portainer/Files/AppData/Config/PiHole/DNS"
         }
       ],
       "maintainer": "https://github.com/mikestraney/portainer-templates/",
@@ -18233,12 +18215,12 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/PiHole_DoH-DoT",
-          "container": "/etc/pihole"
+          "container": "/etc/pihole",
+          "bind": "/portainer/Files/AppData/Config/PiHole_DoH-DoT"
         },
         {
-          "bind": "/portainer/Files/AppData/Config/PiHole_DoH-DoT/DNS",
-          "container": "/etc/dnsmasq.d"
+          "container": "/etc/dnsmasq.d",
+          "bind": "/portainer/Files/AppData/Config/PiHole_DoH-DoT/DNS"
         }
       ],
       "maintainer": "https://github.com/novaspirit/pi-hosted/",
@@ -18267,9 +18249,9 @@
           "name": "DNSSEC",
           "select": [
             {
-              "default": true,
               "text": "Enable DNSSEC",
-              "value": "true"
+              "value": "true",
+              "default": true
             },
             {
               "text": "Disable DNSSEC",
@@ -18306,12 +18288,12 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/PiHole-Unbound",
-          "container": "/etc/pihole"
+          "container": "/etc/pihole",
+          "bind": "/portainer/Files/AppData/Config/PiHole-Unbound"
         },
         {
-          "bind": "/portainer/Files/AppData/Config/PiHole-Unbound/DNS",
-          "container": "/etc/dnsmasq.d"
+          "container": "/etc/dnsmasq.d",
+          "bind": "/portainer/Files/AppData/Config/PiHole-Unbound/DNS"
         }
       ],
       "maintainer": "https://github.com/novaspirit/pi-hosted/",
@@ -18346,8 +18328,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/pi.alert",
-          "container": "/config"
+          "container": "/config",
+          "bind": "/portainer/Files/AppData/Config/pi.alert"
         }
       ],
       "maintainer": "https://github.com/xneo1/portainer_templates/",
@@ -18587,16 +18569,16 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/pixel-server/auth.cfg",
-          "container": "/opt/pixel-server/auth.cfg"
+          "container": "/opt/pixel-server/auth.cfg",
+          "bind": "/portainer/Files/AppData/Config/pixel-server/auth.cfg"
         },
         {
-          "bind": "/portainer/Files/AppData/Config/pixel-server/pixelserver.cfg",
-          "container": "/opt/pixel-server/pixelserver.cfg"
+          "container": "/opt/pixel-server/pixelserver.cfg",
+          "bind": "/portainer/Files/AppData/Config/pixel-server/pixelserver.cfg"
         },
         {
-          "bind": "/portainer/Files/AppData/Config/pixel-server/users.cfg",
-          "container": "/opt/pixel-server/users.cfg"
+          "container": "/opt/pixel-server/users.cfg",
+          "bind": "/portainer/Files/AppData/Config/pixel-server/users.cfg"
         },
         {
           "container": "/etc/crontabs/"
@@ -18944,8 +18926,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/PlexRequests",
-          "container": "/config"
+          "container": "/config",
+          "bind": "/portainer/Files/AppData/Config/PlexRequests"
         }
       ],
       "maintainer": "https://github.com/mikestraney/portainer-templates/",
@@ -19012,7 +18994,6 @@
         "Mail"
       ],
       "description": "Full stack mailserver solution with  TLS support. POP3s, SMTP(s), IMAPs, RSPAMD, Clamav, Roundcube(HTTPS), SPF, DKIM with simple installation and web administration.",
-      "logo": "",
       "name": "poste.io",
       "platform": "linux",
       "repository": {
@@ -19064,8 +19045,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/PostgreSQL",
-          "container": "/var/lib/postgresql/data"
+          "container": "/var/lib/postgresql/data",
+          "bind": "/portainer/Files/AppData/Config/PostgreSQL"
         }
       ],
       "note": "<b>Template created by Pi-Hosted Series</b><br><b>Check our Github page: <a href=\"https://github.com/pi-hosted/pi-hosted\" target=\"_blank\">https://github.com/pi-hosted/pi-hosted</a></b><br><br><b>Official Webpage: </b><a href=\"https://www.postgresql.org/\" target=\"_blank\">https://www.postgresql.org/</a><br><b>Official Docker Documentation: </b><a href=\"https://hub.docker.com/_/postgres/\" target=\"_blank\">https://hub.docker.com/_/postgres/</a><br><br><br>",
@@ -19227,12 +19208,12 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/PrivateBin",
-          "container": "/srv/data"
+          "container": "/srv/data",
+          "bind": "/portainer/Files/AppData/PrivateBin"
         },
         {
-          "bind": "/portainer/Files/AppData/Config/PrivateBin",
-          "container": "/srv/cfg"
+          "container": "/srv/cfg",
+          "bind": "/portainer/Files/AppData/Config/PrivateBin"
         }
       ],
       "note": "<b>Template created by Pi-Hosted Series</b><br><b>Check our Github page: <a href=\"https://github.com/pi-hosted/pi-hosted\" target=\"_blank\">https://github.com/pi-hosted/pi-hosted</a></b><br><br><b>Official Webpage: </b><a href=\"https://privatebin.info/\" target=\"_blank\">https://privatebin.info/</a><br><b>Official Docker Documentation: </b><a href=\"https://hub.docker.com/r/privatebin/nginx-fpm-alpine\" target=\"_blank\">https://hub.docker.com/r/privatebin/nginx-fpm-alpine</a><br><br><br>",
@@ -19346,8 +19327,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/ProtonMail-Bridge",
-          "container": "/root"
+          "container": "/root",
+          "bind": "/portainer/Files/AppData/ProtonMail-Bridge"
         }
       ],
       "maintainer": "https://github.com/mikestraney/portainer-templates/",
@@ -19553,7 +19534,6 @@
         "Metrics"
       ],
       "description": "This is an exporter that exposes information gathered from Proxmox VE node for use by the Prometheus monitoring system.",
-      "logo": "",
       "name": "pve-exporter",
       "platform": "linux",
       "repository": {
@@ -19693,12 +19673,12 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/Pydio",
-          "container": "/config"
+          "container": "/config",
+          "bind": "/portainer/Files/AppData/Config/Pydio"
         },
         {
-          "bind": "/portainer/Files/AppData/Pydio",
-          "container": "/data"
+          "container": "/data",
+          "bind": "/portainer/Files/AppData/Pydio"
         }
       ],
       "maintainer": "https://github.com/mikestraney/portainer-templates/",
@@ -20015,12 +19995,12 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/qFlood",
-          "container": "/config"
+          "container": "/config",
+          "bind": "/portainer/Files/AppData/Config/qFlood"
         },
         {
-          "bind": "/portainer/Downloads",
-          "container": "/app/qBittorrent/downloads"
+          "container": "/app/qBittorrent/downloads",
+          "bind": "/portainer/Downloads"
         }
       ],
       "maintainer": "https://github.com/novaspirit/pi-hosted/",
@@ -20055,8 +20035,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/Quassel-core",
-          "container": "/config"
+          "container": "/config",
+          "bind": "/portainer/Files/AppData/Config/Quassel-core"
         }
       ],
       "maintainer": "https://github.com/mikestraney/portainer-templates/",
@@ -20361,8 +20341,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/ReactiveResume",
-          "container": "/usr/src/app"
+          "container": "/usr/src/app",
+          "bind": "/portainer/Files/AppData/Config/ReactiveResume"
         }
       ],
       "maintainer": "https://github.com/mikestraney/portainer-templates/",
@@ -20627,7 +20607,6 @@
         "Remote Control"
       ],
       "description": "Remotely is a remote control and remote scripting solution, built with .NET 6, Blazor, and SignalR Core.",
-      "logo": "",
       "name": "Remotely",
       "platform": "linux",
       "repository": {
@@ -20756,12 +20735,12 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/revealjs/docs/slides",
-          "container": "/reveal/docs/slides"
+          "container": "/reveal/docs/slides",
+          "bind": "/portainer/Files/AppData/Config/revealjs/docs/slides"
         },
         {
-          "bind": "/portainer/Files/AppData/Config/revealjs/scripts/test",
-          "container": "/resources"
+          "container": "/resources",
+          "bind": "/portainer/Files/AppData/Config/revealjs/scripts/test"
         }
       ],
       "maintainer": "https://github.com/xneo1/portainer_templates/",
@@ -20955,8 +20934,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/rustdesk",
-          "container": "/data"
+          "container": "/data",
+          "bind": "/portainer/Files/AppData/Config/rustdesk"
         }
       ],
       "maintainer": "https://github.com/novaspirit/pi-hosted/",
@@ -21016,16 +20995,16 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/ruTorrent/config",
-          "container": "/config"
+          "container": "/config",
+          "bind": "/portainer/Files/AppData/Config/ruTorrent/config"
         },
         {
-          "bind": "/portainer/Downloads",
-          "container": "/downloads"
+          "container": "/downloads",
+          "bind": "/portainer/Downloads"
         },
         {
-          "bind": "/portainer/Files/AppData/Config/ruTorrent/passwd",
-          "container": "/passwd"
+          "container": "/passwd",
+          "bind": "/portainer/Files/AppData/Config/ruTorrent/passwd"
         }
       ],
       "maintainer": "https://github.com/novaspirit/pi-hosted/",
@@ -21142,8 +21121,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Downloads",
-          "container": "/share"
+          "container": "/share",
+          "bind": "/portainer/Downloads"
         }
       ],
       "note": "<b>Template created by Pi-Hosted Series</b><br><b>Check our Github page: <a href=\"https://github.com/pi-hosted/pi-hosted\" target=\"_blank\">https://github.com/pi-hosted/pi-hosted</a></b><br><br><b>Official Webpage: </b><a href=\"https://www.samba.org/\" target=\"_blank\">https://www.samba.org/</a><br><b>Official Docker Documentation: </b><a href=\"https://github.com/dperson/samba\" target=\"_blank\">https://github.com/dperson/samba</a><br><br><br><b>Youtube Videos:</b><br><ul><li><a href=https://www.youtube.com/watch?v=2zZ3_1GRWrM&list=PL846hFPMqg3jwkxcScD1xw2bKXrJVvarc&index=11 target=\"_blank\">Novaspirit Tech - Setting up Raspberry Pi Samba Server For File Sharing on Docker</a></li><li><a href=https://www.youtube.com/watch?v=9ln6UFH4z8o target=\"_blank\">Novaspirit Tech - Building NAS with Container</a></li></ul><br><br>",
@@ -21367,8 +21346,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/searxng",
-          "container": "/etc/searxng"
+          "container": "/etc/searxng",
+          "bind": "/portainer/Files/AppData/Config/searxng"
         }
       ],
       "note": "<b>Template created by Pi-Hosted Series</b><br><b>Check our Github page: <a href=\"https://github.com/pi-hosted/pi-hosted\" target=\"_blank\">https://github.com/pi-hosted/pi-hosted</a></b><br><br><b>Official Webpage: </b><a href=\"https://docs.searxng.org/\" target=\"_blank\">https://docs.searxng.org/</a><br><b>Official Docker Documentation: </b><a href=\"https://docs.searxng.org/admin/installation-docker.html\" target=\"_blank\">https://docs.searxng.org/admin/installation-docker.html</a><br><h3><b>Pi-Hosted dedicated documentation: </b><a href=\"https://github.com/pi-hosted/pi-hosted/blob/master/docs/searxng.md\" target=\"_blank\">searxng.md</a></h3><br><br><br>",
@@ -21553,8 +21532,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/Shiori",
-          "container": "/srv/shiori"
+          "container": "/srv/shiori",
+          "bind": "/portainer/Files/AppData/Config/Shiori"
         }
       ],
       "note": "<b>Template created by Pi-Hosted Series</b><br><b>Check our Github page: <a href=\"https://github.com/pi-hosted/pi-hosted\" target=\"_blank\">https://github.com/pi-hosted/pi-hosted</a></b><br><br><b>Official Webpage: </b><a href=\"https://github.com/go-shiori/shiori\" target=\"_blank\">https://github.com/go-shiori/shiori</a><br><b>Official Docker Documentation: </b><a href=\"https://github.com/nicholaswilde/docker-shiori\" target=\"_blank\">https://github.com/nicholaswilde/docker-shiori</a><br><br><br>",
@@ -21654,16 +21633,16 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/SickChill",
-          "container": "/config"
+          "container": "/config",
+          "bind": "/portainer/Files/AppData/Config/SickChill"
         },
         {
-          "bind": "/portainer/Downloads",
-          "container": "/downloads"
+          "container": "/downloads",
+          "bind": "/portainer/Downloads"
         },
         {
-          "bind": "/portainer/TV",
-          "container": "/tv"
+          "container": "/tv",
+          "bind": "/portainer/TV"
         }
       ],
       "maintainer": "https://github.com/mikestraney/portainer-templates/",
@@ -21960,8 +21939,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/Snibox",
-          "container": "/app/db/database"
+          "container": "/app/db/database",
+          "bind": "/portainer/Files/AppData/Config/Snibox"
         }
       ],
       "maintainer": "https://github.com/mikestraney/portainer-templates/",
@@ -21989,7 +21968,6 @@
         "Other"
       ],
       "description": "Snippet Box is a simple self-hosted app for organizing your code snippets. It allows you to easily create, edit, browse and manage your snippets in various languages.",
-      "logo": "",
       "name": "snippet-box",
       "platform": "linux",
       "repository": {
@@ -22020,8 +21998,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/Snippet-box",
-          "container": "/app/data"
+          "container": "/app/data",
+          "bind": "/portainer/Files/AppData/Config/Snippet-box"
         }
       ],
       "maintainer": "https://github.com/novaspirit/pi-hosted/",
@@ -22626,8 +22604,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/statping",
-          "container": "/app"
+          "container": "/app",
+          "bind": "/portainer/Files/AppData/Config/statping"
         }
       ],
       "maintainer": "https://github.com/xneo1/portainer_templates/",
@@ -22726,12 +22704,12 @@
       ],
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/StirlingPDF",
-          "container": "/configs"
+          "container": "/configs",
+          "bind": "/portainer/Files/AppData/Config/StirlingPDF"
         },
         {
-          "bind": "/portainer/Files/AppData/Libraries/StirlingPDF/tessdata",
-          "container": "/usr/share/tesseract-ocr/5/tessdata"
+          "container": "/usr/share/tesseract-ocr/5/tessdata",
+          "bind": "/portainer/Files/AppData/Libraries/StirlingPDF/tessdata"
         }
       ],
       "maintainer": "https://github.com/shmolf/portainer-templates/",
@@ -22805,7 +22783,6 @@
       ],
       "description": "SurrealDB is an end-to-end cloud native database for web, mobile, serverless, jamstack, backend, and traditional applications.",
       "image": "surrealdb/surrealdb:latest",
-      "logo": "",
       "name": "SurrealDB",
       "env": [
         {
@@ -22826,8 +22803,8 @@
       "command": "start --user ${SDB_USERNAME} --pass ${SDB_PASSWORD} file:/data/database.db",
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/surrealdb/data",
-          "container": "/data"
+          "container": "/data",
+          "bind": "/portainer/Files/AppData/Config/surrealdb/data"
         }
       ],
       "restart_policy": "unless-stopped",
@@ -23184,12 +23161,12 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/etc/timezone",
-          "container": "/etc/timezone"
+          "container": "/etc/timezone",
+          "bind": "/etc/timezone"
         },
         {
-          "bind": "/etc/localtime",
-          "container": "/etc/localtime"
+          "container": "/etc/localtime",
+          "bind": "/etc/localtime"
         }
       ],
       "network": "host",
@@ -23239,12 +23216,12 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/tailscale",
-          "container": "/var/lib/tailscale"
+          "container": "/var/lib/tailscale",
+          "bind": "/portainer/Files/AppData/Config/tailscale"
         },
         {
-          "bind": "/dev/net/tun",
-          "container": "/dev/net/tun"
+          "container": "/dev/net/tun",
+          "bind": "/dev/net/tun"
         }
       ],
       "note": "<b>Template created by Pi-Hosted Series</b><br><b>Check our Github page: <a href=\"https://github.com/pi-hosted/pi-hosted\" target=\"_blank\">https://github.com/pi-hosted/pi-hosted</a></b><br><br><b>Official Webpage: </b><a href=\"https://tailscale.com/\" target=\"_blank\">https://tailscale.com/</a><br><b>Official Docker Documentation: </b><a href=\"https://hub.docker.com/r/tailscale/tailscale\" target=\"_blank\">https://hub.docker.com/r/tailscale/tailscale</a><br><br><br>",
@@ -23538,8 +23515,8 @@
       ],
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Libraries/StirlingPDF/tessdata",
-          "container": "/usr/share/tesseract-ocr/5/tessdata"
+          "container": "/usr/share/tesseract-ocr/5/tessdata",
+          "bind": "/portainer/Files/AppData/Libraries/StirlingPDF/tessdata"
         }
       ],
       "maintainer": "https://github.com/shmolf/portainer-templates/",
@@ -23655,8 +23632,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/TiddlyWiki",
-          "container": "/var/lib/tiddlywiki"
+          "container": "/var/lib/tiddlywiki",
+          "bind": "/portainer/Files/AppData/Config/TiddlyWiki"
         }
       ],
       "note": "<b>Template created by Pi-Hosted Series</b><br><b>Check our Github page: <a href=\"https://github.com/pi-hosted/pi-hosted\" target=\"_blank\">https://github.com/pi-hosted/pi-hosted</a></b><br><br><b>Official Webpage: </b><a href=\"https://tiddlywiki.com/\" target=\"_blank\">https://tiddlywiki.com/</a><br><b>Official Docker Documentation: </b><a href=\"https://gitlab.com/nicolaw/tiddlywiki\" target=\"_blank\">https://gitlab.com/nicolaw/tiddlywiki</a><br><br><h3><b><a href=\"https://github.com/pi-hosted/pi-hosted/blob/master/tools/install_tiddlywiki.sh\" target=\"_blank\">Pre-installation script</a> must be RAN before you install: </b>wget -qO- https://raw.githubusercontent.com/pi-hosted/pi-hosted/master/tools/install_tiddlywiki.sh | bash</h3><br><br>",
@@ -23732,8 +23709,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/tt-rss",
-          "container": "/config"
+          "container": "/config",
+          "bind": "/portainer/Files/AppData/Config/tt-rss"
         }
       ],
       "maintainer": "https://github.com/mikestraney/portainer-templates/",
@@ -23819,20 +23796,20 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/traefik/traefik.yml",
-          "container": "/traefik.yml"
+          "container": "/traefik.yml",
+          "bind": "/portainer/Files/AppData/Config/traefik/traefik.yml"
         },
         {
-          "bind": "/portainer/Files/AppData/Config/traefik/config.yml",
-          "container": "/config.yml"
+          "container": "/config.yml",
+          "bind": "/portainer/Files/AppData/Config/traefik/config.yml"
         },
         {
-          "bind": "/portainer/Files/AppData/Config/traefik/acme.json",
-          "container": "/acme.json"
+          "container": "/acme.json",
+          "bind": "/portainer/Files/AppData/Config/traefik/acme.json"
         },
         {
-          "bind": "/var/run/docker.sock",
-          "container": "/var/run/docker.sock"
+          "container": "/var/run/docker.sock",
+          "bind": "/var/run/docker.sock"
         }
       ],
       "maintainer": "https://github.com/novaspirit/pi-hosted/",
@@ -24030,16 +24007,16 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/transmission-openvpn",
-          "container": "/config"
+          "container": "/config",
+          "bind": "/portainer/Files/AppData/Config/transmission-openvpn"
         },
         {
-          "bind": "/portainer/Downloads",
-          "container": "/data"
+          "container": "/data",
+          "bind": "/portainer/Downloads"
         },
         {
-          "bind": "/etc/localtime",
-          "container": "/etc/localtime"
+          "container": "/etc/localtime",
+          "bind": "/etc/localtime"
         }
       ],
       "maintainer": "https://github.com/novaspirit/pi-hosted/",
@@ -24110,16 +24087,16 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/transmission-openvpn",
-          "container": "/config"
+          "container": "/config",
+          "bind": "/portainer/Files/AppData/Config/transmission-openvpn"
         },
         {
-          "bind": "/portainer/Downloads",
-          "container": "/data"
+          "container": "/data",
+          "bind": "/portainer/Downloads"
         },
         {
-          "bind": "/etc/localtime",
-          "container": "/etc/localtime"
+          "container": "/etc/localtime",
+          "bind": "/etc/localtime"
         }
       ],
       "maintainer": "https://github.com/novaspirit/pi-hosted/",
@@ -24178,12 +24155,12 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Downloads",
-          "container": "/data"
+          "container": "/data",
+          "bind": "/portainer/Downloads"
         },
         {
-          "bind": "/etc/localtime",
-          "container": "/etc/localtime"
+          "container": "/etc/localtime",
+          "bind": "/etc/localtime"
         }
       ],
       "maintainer": "https://github.com/mikestraney/portainer-templates/",
@@ -24217,8 +24194,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/trilium-data",
-          "container": "/home/node/trilium-data"
+          "container": "/home/node/trilium-data",
+          "bind": "/portainer/Files/AppData/Config/trilium-data"
         }
       ],
       "maintainer": "https://github.com/xneo1/portainer_templates/",
@@ -24350,20 +24327,20 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/TwitchPointsMiner/run.py",
-          "container": "/usr/src/app/run.py"
+          "container": "/usr/src/app/run.py",
+          "bind": "/portainer/Files/AppData/Config/TwitchPointsMiner/run.py"
         },
         {
-          "bind": "/portainer/Files/AppData/TwitchPointsMiner/cookies",
-          "container": "/usr/src/app/cookies"
+          "container": "/usr/src/app/cookies",
+          "bind": "/portainer/Files/AppData/TwitchPointsMiner/cookies"
         },
         {
-          "bind": "/portainer/Files/AppData/TwitchPointsMiner/logs",
-          "container": "/usr/src/app/logs"
+          "container": "/usr/src/app/logs",
+          "bind": "/portainer/Files/AppData/TwitchPointsMiner/logs"
         },
         {
-          "bind": "/portainer/Files/AppData/TwitchPointsMiner/analytics",
-          "container": "/usr/src/app/analytics"
+          "container": "/usr/src/app/analytics",
+          "bind": "/portainer/Files/AppData/TwitchPointsMiner/analytics"
         }
       ],
       "maintainer": "https://github.com/Qballjos/portainer_templates/",
@@ -24557,8 +24534,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/Unifi",
-          "container": "/config"
+          "container": "/config",
+          "bind": "/portainer/Files/AppData/Config/Unifi"
         }
       ],
       "maintainer": "https://github.com/Qballjos/portainer_templates/",
@@ -24611,12 +24588,12 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/UnifFiVideo/Recordings/",
-          "container": "/recordings"
+          "container": "/recordings",
+          "bind": "/portainer/Files/AppData/Config/UnifFiVideo/Recordings/"
         },
         {
-          "bind": "/portainer/Files/AppData/Config/UniFiVideo/",
-          "container": "/config"
+          "container": "/config",
+          "bind": "/portainer/Files/AppData/Config/UniFiVideo/"
         }
       ],
       "note": "<b>Template created by Pi-Hosted Series</b><br><b>Check our Github page: <a href=\"https://github.com/pi-hosted/pi-hosted\" target=\"_blank\">https://github.com/pi-hosted/pi-hosted</a></b><br><br><b>Official Webpage: </b><a href=\"https://github.com/pducharme/UniFi-Video-Controller\" target=\"_blank\">https://github.com/pducharme/UniFi-Video-Controller</a><br><b>Official Docker Documentation: </b><a href=\"https://github.com/pducharme/UniFi-Video-Controller\" target=\"_blank\">https://github.com/pducharme/UniFi-Video-Controller</a><br><br><br>",
@@ -24759,16 +24736,16 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/unmanic/config",
-          "container": "/config"
+          "container": "/config",
+          "bind": "/portainer/Files/AppData/Config/unmanic/config"
         },
         {
-          "bind": "/portainer/Files/AppData/Config/unmanic/library",
-          "container": "/library"
+          "container": "/library",
+          "bind": "/portainer/Files/AppData/Config/unmanic/library"
         },
         {
-          "bind": "/portainer/Files/AppData/Config/unmanic/tmp",
-          "container": "/tmp/unmanic"
+          "container": "/tmp/unmanic",
+          "bind": "/portainer/Files/AppData/Config/unmanic/tmp"
         }
       ],
       "note": "<b>Template created by Pi-Hosted Series</b><br><b>Check our Github page: <a href=\"https://github.com/pi-hosted/pi-hosted\" target=\"_blank\">https://github.com/pi-hosted/pi-hosted</a></b><br><br><b>Official Webpage: </b><a href=\"https://docs.unmanic.app/\" target=\"_blank\">https://docs.unmanic.app/</a><br><b>Official Docker Documentation: </b><a href=\"https://docs.unmanic.app/docs/installation/docker\" target=\"_blank\">https://docs.unmanic.app/docs/installation/docker</a><br><br><br>",
@@ -24811,8 +24788,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/uptime-kuma",
-          "container": "/app/data"
+          "container": "/app/data",
+          "bind": "/portainer/Files/AppData/Config/uptime-kuma"
         }
       ],
       "maintainer": "https://github.com/novaspirit/pi-hosted/",
@@ -24866,12 +24843,12 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/urbackup",
-          "container": "/var/urbackup"
+          "container": "/var/urbackup",
+          "bind": "/portainer/Files/AppData/Config/urbackup"
         },
         {
-          "bind": "/portainer/backups",
-          "container": "/backup"
+          "container": "/backup",
+          "bind": "/portainer/backups"
         }
       ],
       "note": "<b>Template created by Pi-Hosted Series</b><br><b>Check our Github page: <a href=\"https://github.com/pi-hosted/pi-hosted\" target=\"_blank\">https://github.com/pi-hosted/pi-hosted</a></b><br><br><b>Official Webpage: </b><a href=\"https://www.urbackup.org/\" target=\"_blank\">https://www.urbackup.org/</a><br><b>Official Docker Documentation: </b><a href=\"https://www.github.com/uroni/urbackup-server-docker\" target=\"_blank\">https://www.github.com/uroni/urbackup-server-docker</a><br><br><br>",
@@ -24962,8 +24939,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/Bitwarden",
-          "container": "/data"
+          "container": "/data",
+          "bind": "/portainer/Files/AppData/Config/Bitwarden"
         }
       ],
       "maintainer": "https://github.com/novaspirit/pi-hosted/",
@@ -25416,8 +25393,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/var/run/docker.sock",
-          "container": "/var/run/docker.sock"
+          "container": "/var/run/docker.sock",
+          "bind": "/var/run/docker.sock"
         }
       ],
       "maintainer": "https://github.com/novaspirit/pi-hosted/",
@@ -25767,8 +25744,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/Whoogle",
-          "container": "/config"
+          "container": "/config",
+          "bind": "/portainer/Files/AppData/Config/Whoogle"
         }
       ],
       "note": "<b>Template created by Pi-Hosted Series</b><br><b>Check our Github page: <a href=\"https://github.com/pi-hosted/pi-hosted\" target=\"_blank\">https://github.com/pi-hosted/pi-hosted</a></b><br><br><b>Official Webpage: </b><a href=\"https://github.com/benbusby/whoogle-search\" target=\"_blank\">https://github.com/benbusby/whoogle-search</a><br><b>Official Docker Documentation: </b><a href=\"https://github.com/benbusby/whoogle-search#g-manual-docker\" target=\"_blank\">https://github.com/benbusby/whoogle-search#g-manual-docker</a><br><br><h3><b><a href=\"https://github.com/pi-hosted/pi-hosted/blob/master/tools/install_whoogle.sh\" target=\"_blank\">Pre-installation script</a> must be RAN before you install: </b>wget -qO- https://raw.githubusercontent.com/pi-hosted/pi-hosted/master/tools/install_whoogle.sh | bash</h3><br><br><b>Youtube Video: </b><a href=https://www.youtube.com/watch?v=j3ZGxo3ibUs&list=PL846hFPMqg3jwkxcScD1xw2bKXrJVvarc&index=12 target=\"_blank\">Novaspirit Tech - How to Install Whoogle to replace using Google and repo notes</a><br><br>",
@@ -26493,12 +26470,12 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "yacht",
-          "container": "/config"
+          "container": "/config",
+          "bind": "yacht"
         },
         {
-          "bind": "/var/run/docker.sock",
-          "container": "/var/run/docker.sock"
+          "container": "/var/run/docker.sock",
+          "bind": "/var/run/docker.sock"
         }
       ],
       "note": "<b>Template created by Pi-Hosted Series</b><br><b>Check our Github page: <a href=\"https://github.com/pi-hosted/pi-hosted\" target=\"_blank\">https://github.com/pi-hosted/pi-hosted</a></b><br><br><b>Official Webpage: </b><a href=\"https://yacht.sh/\" target=\"_blank\">https://yacht.sh/</a><br><b>Official Docker Documentation: </b><a href=\"https://yacht.sh/docs/Installation/Install#via-docker-compose\" target=\"_blank\">https://yacht.sh/docs/Installation/Install#via-docker-compose</a><br><br><br>",
@@ -26593,7 +26570,6 @@
         "Monitoring"
       ],
       "description": "YourSpotify is a self-hosted application that tracks what you listen and offers you a dashboard to explore statistics about it!",
-      "logo": "",
       "name": "your_spotify",
       "platform": "linux",
       "repository": {
@@ -26623,24 +26599,24 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/YTDLM",
-          "container": "/app/appdata"
+          "container": "/app/appdata",
+          "bind": "/portainer/Files/AppData/Config/YTDLM"
         },
         {
-          "bind": "/portainer/Files/AppData/Youtube/Video",
-          "container": "/app/video"
+          "container": "/app/video",
+          "bind": "/portainer/Files/AppData/Youtube/Video"
         },
         {
-          "bind": "/portainer/Files/AppData/Youtube/Subscriptions",
-          "container": "/app/subscriptions"
+          "container": "/app/subscriptions",
+          "bind": "/portainer/Files/AppData/Youtube/Subscriptions"
         },
         {
-          "bind": "/portainer/Files/AppData/Youtube/Users",
-          "container": "/app/users"
+          "container": "/app/users",
+          "bind": "/portainer/Files/AppData/Youtube/Users"
         },
         {
-          "bind": "/portainer/Files/AppData/Youtube/Audio",
-          "container": "/app/audio"
+          "container": "/app/audio",
+          "bind": "/portainer/Files/AppData/Youtube/Audio"
         }
       ],
       "note": "<b>Template created by Pi-Hosted Series</b><br><b>Check our Github page: <a href=\"https://github.com/pi-hosted/pi-hosted\" target=\"_blank\">https://github.com/pi-hosted/pi-hosted</a></b><br><br><b>Official Webpage: </b><a href=\"https://github.com/Tzahi12345/YoutubeDL-Material\" target=\"_blank\">https://github.com/Tzahi12345/YoutubeDL-Material</a><br><b>Official Docker Documentation: </b><a href=\"https://github.com/Tzahi12345/YoutubeDL-Material#docker\" target=\"_blank\">https://github.com/Tzahi12345/YoutubeDL-Material#docker</a><br><br><br>",
@@ -26832,8 +26808,8 @@
       "type": 1,
       "volumes": [
         {
-          "bind": "/portainer/Files/AppData/Config/Zusam",
-          "container": "/zusam/data"
+          "container": "/zusam/data",
+          "bind": "/portainer/Files/AppData/Config/Zusam"
         }
       ],
       "maintainer": "https://github.com/xneo1/portainer_templates/",

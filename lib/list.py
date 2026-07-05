@@ -1,8 +1,10 @@
 import json
+import html
 import urllib.parse
 import os
 import csv
 import re
+import sys
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 project_dir = os.path.dirname(current_dir)
@@ -33,12 +35,12 @@ def generate_app_list():
   templates.sort(key=lambda template: template['title'].lower())
   markdown_content = ''
   for index, template in enumerate(templates):
-      name = template['title'].title()
+      name = template['title']
       maintainer = template.get('maintainer')
       maintainer_md_link = f" -- ([Report issues]({maintainer}))" if maintainer else ''
       description = clean_text(template['description'])
       if 'logo' in template and template['logo']:
-          logo = f"<img title=\"{description}\" src='{template['logo']}' width='26' height='26' /> "
+          logo = f"<img title=\"{description}\" src=\"{html.escape(template['logo'])}\" width='26' height='26' /> "
       else:
           logo = ' '
       markdown_content += f"{index+1}. {logo}**[{name}]({slugify(name)} '{description}')** {maintainer_md_link}\n"
@@ -48,13 +50,19 @@ def generate_sources_list():
     sources = load_csv_file(sources_path)
     markdown_content = ''
 
-    for index, source in enumerate(sources):
+    count = 0
+    for source in sources:
         if len(source) > 1 and source[1].strip():
+          count += 1
           url = source[1].strip()
           parsed_url = urllib.parse.urlparse(url)
-          username = parsed_url.path.split('/')[1]
-          avatar = f'<img src="https://github.com/{username}.png?size=40" width="26" height="26" />'
-          markdown_content += f"{index + 1}. {avatar} [template]({url}) by [@{username}](https://github.com/{username})\n"
+          path_parts = [p for p in parsed_url.path.split('/') if p]
+          if parsed_url.hostname in ('github.com', 'raw.githubusercontent.com') and path_parts:
+            username = path_parts[0]
+            avatar = f'<img src="https://github.com/{username}.png?size=40" width="26" height="26" />'
+            markdown_content += f"{count}. {avatar} [template]({url}) by [@{username}](https://github.com/{username})\n"
+          else:
+            markdown_content += f"{count}. [template]({url})\n"
 
     return markdown_content
 
@@ -72,8 +80,10 @@ def insert_content_between_markers(file_path, start_marker, end_marker, content_
             end_index = i
             break
 
-    if start_index >= 0 and end_index >= 0:
-        lines[start_index + 1:end_index] = [content_to_insert + '\n']
+    if start_index < 0 or end_index <= start_index:
+        sys.exit(f'Markers {start_marker} / {end_marker} not found in {file_path}')
+
+    lines[start_index + 1:end_index] = [content_to_insert + '\n']
 
     with open(file_path, 'w') as file:
         file.writelines(lines)

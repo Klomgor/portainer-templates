@@ -1,7 +1,7 @@
 import json
 import os
 import sys
-from jsonschema import validate, ValidationError
+from jsonschema import Draft7Validator, FormatChecker, ValidationError
 
 def load_json_file(file_path):
     with open(file_path, 'r') as file:
@@ -11,15 +11,17 @@ def main():
     script_dir = os.path.dirname(os.path.abspath(__file__))
     root_dir = os.path.join(script_dir, '..')
 
+    templates = {}
     try:
         schema = load_json_file(os.path.join(root_dir, 'Schema.json'))
         templates = load_json_file(os.path.join(root_dir, 'templates.json'))
-        validate(instance=templates, schema=schema)
+        Draft7Validator(schema, format_checker=FormatChecker()).validate(templates)
         print('✅ templates.json is valid against the schema')
     except ValidationError as ve:
-        print(f'❌ Validation error: {ve.message}')
-        if isinstance(ve.instance, dict):
-            print(f'   Title of invalid template: {ve.instance.get("title")}')
+        print(f'❌ Validation error at {ve.json_path}: {ve.message}')
+        path = list(ve.absolute_path)
+        if path[:1] == ['templates'] and len(path) > 1:
+            print(f'   Title of invalid template: {templates["templates"][path[1]].get("title")}')
         sys.exit(1)
     except FileNotFoundError as fnfe:
         print(f'❌ File not found: {fnfe}')
