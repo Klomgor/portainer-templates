@@ -1,0 +1,247 @@
+# Cuts a GitHub Release whenever a minor (or major) tag is pushed
+# Tag workflow bumps patch tag on each templates change, and minor tag monthly
+# The release includes release notes (like what changed), and compiled templates.json
+name: 🚀 Release
+
+on:
+  push:
+    tags:
+      # Minor + major bumps only (patch tags end in a non-zero patch, e.g. v0.9.1)
+      - 'v[0-9]+.[0-9]+.0'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Existing tag to (re)generate the release for, e.g. v0.10.0'
+        required: true
+        type: string
+
+# Least privilege by default; the job elevates to contents:write to publish
+permissions:
+  contents: read
+
+# Never let two releases for the same tag run at once; don't cancel a publish
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.inputs.tag || github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: 🚀 Publish Release
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          # Full history + all tags: we diff templates.json between two tags
+          fetch-depth: 0
+          # We authenticate gh with an explicit token below
+          persist-credentials: false
+
+      - name: Resolve tags
+        id: refs
+        env:
+          INPUT_TAG: ${{ github.event.inputs.tag }}
+          REF_NAME: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+
+          # The tag being released: the dispatch input, else the pushed tag
+          target="${INPUT_TAG:-$REF_NAME}"
+          if ! [[ "$target" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::'${target}' is not a vMAJOR.MINOR.PATCH tag"
+            exit 1
+          fi
+          if ! git rev-parse -q --verify "refs/tags/${target}^{commit}" >/dev/null; then
+            echo "::error::Tag '${target}' does not exist"
+            exit 1
+          fi
+
+          # Previous release = the highest minor/major tag reachable from this one.
+          # --merged keeps to this tag's history; awk 'NR==1' is a SIGPIPE-safe head.
+          prev=$(git tag --sort=-v:refname --merged "${target}^{commit}" \
+            | grep -E '^v[0-9]+\.[0-9]+\.0$' \
+            | grep -Fvx -- "${target}" \
+            | awk 'NR==1' || true)
+
+          if [ -n "$prev" ]; then
+            echo "Releasing ${target}; previous release was ${prev}"
+          else
+            echo "Releasing ${target}; no previous release found (treating as first)"
+          fi
+          {
+            echo "target=${target}"
+            echo "prev=${prev}"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Build changelog + asset
+        id: notes
+        env:
+          TARGET: ${{ steps.refs.outputs.target }}
+          PREV: ${{ steps.refs.outputs.prev }}
+          REPO_URL: ${{ github.server_url }}/${{ github.repository }}
+        run: |
+          set -euo pipefail
+
+          # templates.json at the tag being released (hard requirement)
+          if ! git cat-file -e "${TARGET}:templates.json" 2>/dev/null; then
+            echo "::error::templates.json not found at ${TARGET}; nothing to release"
+            exit 1
+          fi
+          git show "${TARGET}:templates.json" > new.json
+
+          # templates.json at the previous release. Empty for a first release, or
+          # if the file simply didn't exist that far back (older history)
+          if [ -n "$PREV" ] && git cat-file -e "${PREV}:templates.json" 2>/dev/null; then
+            git show "${PREV}:templates.json" > old.json
+          else
+            if [ -n "$PREV" ]; then
+              echo "::warning::templates.json not found at ${PREV}; treating as first release"
+            fi
+            echo '{"templates":[]}' > old.json
+          fi
+          total=$(jq '.templates | length' new.json)
+
+          # Release title, e.g. "Portainer Templates v0.11.0 (June 2026)". The month
+          # comes from the tag's own creation date, so a later regeneration keeps the
+          # original month rather than drifting to today's.
+          month=$(TZ=UTC git for-each-ref \
+            --format='%(creatordate:format-local:%B %Y)' "refs/tags/${TARGET}")
+          [ -n "$month" ] || month=$(date -u '+%B %Y')
+          title="Portainer Templates ${TARGET} (${month})"
+
+          # Map title -> object minus the sequential `id`, which renumbers on every
+          # regen and would otherwise mark nearly every app as "updated"
+          jq -S '.templates | map({(.title): (del(.id))}) | add // {}' new.json > new_map.json
+          jq -S '.templates | map({(.title): (del(.id))}) | add // {}' old.json > old_map.json
+
+          jq -n --slurpfile n new_map.json --slurpfile o old_map.json '
+            $n[0] as $n | $o[0] as $o |
+            {
+              added:   (($n | keys) - ($o | keys)),
+              removed: (($o | keys) - ($n | keys)),
+              updated: [ $n | keys[] as $k | select( ($o | has($k)) and ($n[$k] != $o[$k]) ) | $k ]
+            }' > diff.json
+
+          added=$(jq '.added   | length' diff.json)
+          removed=$(jq '.removed | length' diff.json)
+          updated=$(jq '.updated | length' diff.json)
+
+          # Render the release notes (lists capped inside jq, so no `| head` and
+          # therefore no SIGPIPE under pipefail)
+          jq -r -n \
+            --slurpfile d diff.json \
+            --arg prev "$PREV" \
+            --arg cur "$TARGET" \
+            --arg total "$total" \
+            --arg repo "$REPO_URL" '
+            ($d[0]) as $d |
+            def section(title; arr; cap):
+              if (arr | length) == 0 then empty
+              else
+                "### \(title) (\(arr | length))",
+                (arr[0:cap][] | "- \(.)"),
+                (if (arr | length) > cap
+                  then "- …and \((arr | length) - cap) more"
+                  else empty end),
+                ""
+              end;
+            "\($cur) includes \($total) stacks and apps from upstream sources",
+            ( if $prev == "" then empty
+              else
+                "",
+                section("➕ Added";   $d.added;   40),
+                section("➖ Removed"; $d.removed; 40),
+                section("🔄 Updated"; $d.updated; 40),
+                "[Full diff](\($repo)/compare/\($prev)...\($cur))"
+              end )
+          ' > notes.md
+
+          # The tag's templates.json becomes the release asset
+          cp new.json templates.json
+
+          echo "Changelog: +${added} added, -${removed} removed, ~${updated} updated (${total} total)"
+
+          # Nothing to publish if the diff is empty -- unless this is the first
+          # release (no previous), which is always worth cutting. The publish step
+          # keys off this so a forced/dispatched no-op tag doesn't yield an empty
+          # release (the scheduled monthly minor already self-skips in tag.yml).
+          if [ -n "$PREV" ] && [ "$((added + removed + updated))" -eq 0 ]; then
+            changed=false
+            echo "::notice::No template changes since ${PREV}; skipping the release"
+          else
+            changed=true
+          fi
+
+          {
+            echo "total=${total}"
+            echo "added=${added}"
+            echo "removed=${removed}"
+            echo "updated=${updated}"
+            echo "changed=${changed}"
+            echo "title=${title}"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Publish release
+        id: publish
+        if: steps.notes.outputs.changed == 'true'
+        env:
+          TARGET: ${{ steps.refs.outputs.target }}
+          TITLE: ${{ steps.notes.outputs.title }}
+          GH_TOKEN: ${{ secrets.BOT_TOKEN || secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+
+          # Idempotent: update an existing release (re-runs / manual dispatch),
+          # otherwise create it. --verify-tag refuses to invent a tag.
+          if gh release view "$TARGET" >/dev/null 2>&1; then
+            echo "Release ${TARGET} already exists, updating notes + asset"
+            gh release edit "$TARGET" --title "$TITLE" --notes-file notes.md
+            gh release upload "$TARGET" templates.json --clobber
+            echo "result=updated" >> "$GITHUB_OUTPUT"
+          else
+            echo "Creating release ${TARGET}"
+            gh release create "$TARGET" templates.json \
+              --title "$TITLE" \
+              --notes-file notes.md \
+              --verify-tag
+            echo "result=created" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Summary
+        if: always()
+        env:
+          TARGET: ${{ steps.refs.outputs.target }}
+          PREV: ${{ steps.refs.outputs.prev }}
+          TITLE: ${{ steps.notes.outputs.title }}
+          TOTAL: ${{ steps.notes.outputs.total }}
+          ADDED: ${{ steps.notes.outputs.added }}
+          REMOVED: ${{ steps.notes.outputs.removed }}
+          UPDATED: ${{ steps.notes.outputs.updated }}
+          CHANGED: ${{ steps.notes.outputs.changed }}
+          RESULT: ${{ steps.publish.outputs.result }}
+          PUBLISH_OUTCOME: ${{ steps.publish.outcome }}
+          REPO_URL: ${{ github.server_url }}/${{ github.repository }}
+        run: |
+          set -euo pipefail
+          {
+            echo "## Release"
+            echo ""
+            echo "| Field | Value |"
+            echo "|-------|-------|"
+            if [ "${RESULT:-}" = "created" ] || [ "${RESULT:-}" = "updated" ]; then
+              echo "| Release | ✅ [${TITLE:-$TARGET}](${REPO_URL}/releases/tag/${TARGET}) (${RESULT}) |"
+            elif [ "${CHANGED:-}" = "false" ]; then
+              echo "| Release | ⏭️ Skipped — no template changes since \`${PREV:-none}\` |"
+            elif [ "${PUBLISH_OUTCOME:-}" = "failure" ]; then
+              echo "| Release | ❌ Failed for \`${TARGET:-n/a}\` |"
+            else
+              echo "| Release | ⏭️ Skipped |"
+            fi
+            echo "| Previous | \`${PREV:-none}\` |"
+            echo "| Templates | ${TOTAL:-n/a} total |"
+            echo "| Changes | ✨ ${ADDED:-0} added · 🗑️ ${REMOVED:-0} removed · ♻️ ${UPDATED:-0} updated |"
+          } >> "$GITHUB_STEP_SUMMARY"
