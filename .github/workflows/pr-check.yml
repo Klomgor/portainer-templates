@@ -1,6 +1,5 @@
-# Validates pull requests. Each concern is a separate status check, gated by a
-# file-path matrix so only relevant checks run. Safe for fork PRs (read-only
-# token, no secrets). Ends with an always-run build that uploads templates.json.
+# Validates PRs -- each check is gated by a file-path matrix so only relevant
+# ones run. Safe for forks (read-only, no secrets).
 name: 🚦 PR Checks
 
 on:
@@ -33,8 +32,7 @@ jobs:
         with:
           persist-credentials: false
 
-      # Only meaningful on a PR (needs a base to diff against); on manual dispatch
-      # the step is skipped, outputs are empty, and every check runs via its fallback
+      # PR-only (needs a base to diff); on dispatch every check runs via its fallback
       - name: Filter paths
         id: filter
         if: github.event_name == 'pull_request'
@@ -167,7 +165,7 @@ jobs:
       - name: Validate committed templates.json
         run: python lib/validate.py
 
-  # Lint this workflow itself (scoped to the new file; legacy workflows are exempt)
+  # Lint every workflow with actionlint + zizmor
   workflow-audit:
     name: 🛠️ Workflow Audit
     runs-on: ubuntu-latest
@@ -182,13 +180,15 @@ jobs:
       - name: Run actionlint
         uses: raven-actions/actionlint@3d39aea434753780c3b3d4a1a31c854b4dbf49d7 # v2
         with:
-          files: .github/workflows/pr-check.yml
+          # comma-separated globs -- matches every workflow
+          files: .github/workflows/*.yml
           fail-on-error: true
 
       - name: Run zizmor
         uses: zizmorcore/zizmor-action@192e21d79ab29983730a13d1382995c2307fbcaa # v0.5.7
         with:
-          inputs: .github/workflows/pr-check.yml
+          # scan the whole workflows dir
+          inputs: .github/workflows/
           online-audits: false
           advanced-security: false
           annotations: true

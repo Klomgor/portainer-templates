@@ -1,6 +1,5 @@
-# Cuts a GitHub Release whenever a minor (or major) tag is pushed
-# Tag workflow bumps patch tag on each templates change, and minor tag monthly
-# The release includes release notes (like what changed), and compiled templates.json
+# Cuts a GitHub Release on each minor/major tag, with a changelog and the
+# compiled templates.json attached
 name: 🚀 Release
 
 on:
@@ -59,8 +58,7 @@ jobs:
             exit 1
           fi
 
-          # Previous release = the highest minor/major tag reachable from this one.
-          # --merged keeps to this tag's history; awk 'NR==1' is a SIGPIPE-safe head.
+          # Previous release: highest minor/major tag reachable from this one
           prev=$(git tag --sort=-v:refname --merged "${target}^{commit}" \
             | grep -E '^v[0-9]+\.[0-9]+\.0$' \
             | grep -Fvx -- "${target}" \
@@ -92,8 +90,7 @@ jobs:
           fi
           git show "${TARGET}:templates.json" > new.json
 
-          # templates.json at the previous release. Empty for a first release, or
-          # if the file simply didn't exist that far back (older history)
+          # templates.json at the previous release (empty for a first release)
           if [ -n "$PREV" ] && git cat-file -e "${PREV}:templates.json" 2>/dev/null; then
             git show "${PREV}:templates.json" > old.json
           else
@@ -104,16 +101,14 @@ jobs:
           fi
           total=$(jq '.templates | length' new.json)
 
-          # Release title, e.g. "Portainer Templates v0.11.0 (June 2026)". The month
-          # comes from the tag's own creation date, so a later regeneration keeps the
-          # original month rather than drifting to today's.
+          # Release title, e.g. "Portainer Templates v0.11.0 (June 2026)". Month comes
+          # from the tag's own creation date, so re-runs keep the original month.
           month=$(TZ=UTC git for-each-ref \
             --format='%(creatordate:format-local:%B %Y)' "refs/tags/${TARGET}")
           [ -n "$month" ] || month=$(date -u '+%B %Y')
           title="Portainer Templates ${TARGET} (${month})"
 
-          # Map title -> object minus the sequential `id`, which renumbers on every
-          # regen and would otherwise mark nearly every app as "updated"
+          # Key by title, minus the `id` (it renumbers each regen -> false "updated")
           jq -S '.templates | map({(.title): (del(.id))}) | add // {}' new.json > new_map.json
           jq -S '.templates | map({(.title): (del(.id))}) | add // {}' old.json > old_map.json
 
@@ -129,8 +124,7 @@ jobs:
           removed=$(jq '.removed | length' diff.json)
           updated=$(jq '.updated | length' diff.json)
 
-          # Render the release notes (lists capped inside jq, so no `| head` and
-          # therefore no SIGPIPE under pipefail)
+          # Render the release notes (lists capped inside jq)
           jq -r -n \
             --slurpfile d diff.json \
             --arg prev "$PREV" \
@@ -164,10 +158,8 @@ jobs:
 
           echo "Changelog: +${added} added, -${removed} removed, ~${updated} updated (${total} total)"
 
-          # Nothing to publish if the diff is empty -- unless this is the first
-          # release (no previous), which is always worth cutting. The publish step
-          # keys off this so a forced/dispatched no-op tag doesn't yield an empty
-          # release (the scheduled monthly minor already self-skips in tag.yml).
+          # Skip publishing if nothing changed -- unless it's the first release
+          # (no previous), which is always worth cutting.
           if [ -n "$PREV" ] && [ "$((added + removed + updated))" -eq 0 ]; then
             changed=false
             echo "::notice::No template changes since ${PREV}; skipping the release"
@@ -195,8 +187,7 @@ jobs:
         run: |
           set -euo pipefail
 
-          # Idempotent: update an existing release (re-runs / manual dispatch),
-          # otherwise create it. --verify-tag refuses to invent a tag.
+          # Idempotent: update an existing release, else create it
           if gh release view "$TARGET" >/dev/null 2>&1; then
             echo "Release ${TARGET} already exists, updating notes + asset"
             gh release edit "$TARGET" --title "$TITLE" --notes-file notes.md

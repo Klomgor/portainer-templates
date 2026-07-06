@@ -1,7 +1,5 @@
-# Bumps the git tag
-# The patch tag bumped on each templates.json change
-# Minor tag bumped about monthly
-# Major tag bumped manually when there's a big change
+# Bumps the git tag: patch on each templates.json change, minor ~monthly,
+# major by hand for big changes
 name: 🔖 Tag
 on:
   push:
@@ -38,8 +36,7 @@ jobs:
     name: 🏷️ Bump + Tag
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    # Only ever tag from main (push is already main-only; this guards manual dispatch
-    # from a feature branch, which would otherwise release unreviewed code)
+    # Only tag from main (guards a manual dispatch from a feature branch)
     if: github.ref == 'refs/heads/main'
     permissions:
       contents: write
@@ -49,7 +46,7 @@ jobs:
         with:
           # Full history + all tags, so we can find the latest semver tag
           fetch-depth: 0
-          # We push with an explicit token below, so don't persist checkout creds
+          # We push with our own token below
           persist-credentials: false
 
       - name: Compute next version
@@ -74,9 +71,7 @@ jobs:
             exit 1
           fi
 
-          # Decide the bump type. 'auto' is driven by the trigger: the monthly
-          # scheduled run bumps minor, any other run (a templates.json push, or a
-          # manual dispatch that left 'auto') bumps patch.
+          # 'auto': the monthly scheduled run bumps minor, everything else patch
           bump="$BUMP_INPUT"
           if [ "$bump" = "auto" ]; then
             if [ "$EVENT_NAME" = "schedule" ]; then
@@ -88,12 +83,8 @@ jobs:
             fi
           fi
 
-          # The monthly minor is just a release marker: if templates.json is
-          # unchanged since the last release (the previous minor/major tag) there
-          # is nothing to release, so skip the bump entirely -- no empty tag, no
-          # empty release, no needless image rebuild. Compared against the last
-          # RELEASE (not the latest tag), so a month of patch updates still counts.
-          # Only the scheduled run self-skips; a forced bump always proceeds.
+          # Monthly minor is just a release marker -- skip it if templates.json is
+          # unchanged since the last release. Scheduled run only; forced bumps proceed.
           if [ "$EVENT_NAME" = "schedule" ]; then
             last_release=$(git tag --sort=-v:refname --merged HEAD \
               | grep -E '^v[0-9]+\.[0-9]+\.0$' | awk 'NR==1' || true)
@@ -149,8 +140,7 @@ jobs:
           git config user.email "alicia-gh-bot@mail.as93.net"
           git tag -a "${NEXT}" -m "Release ${NEXT} (${BUMP} bump)"
 
-          # Push over an explicit authenticated remote (checkout creds aren't
-          # persisted). Actions masks the token in logs.
+          # Push over an explicit authed remote (checkout creds aren't persisted)
           git push "https://x-access-token:${GH_TOKEN}@github.com/${REPO}.git" "refs/tags/${NEXT}"
 
           echo "Pushed tag ${NEXT} (was ${PREVIOUS})"
