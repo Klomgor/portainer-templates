@@ -1,2 +1,3 @@
 requests
 jsonschema
+rfc3987

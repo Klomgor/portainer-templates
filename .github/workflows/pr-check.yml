@@ -1,0 +1,281 @@
+# Validates PRs -- each check is gated by a file-path matrix so only relevant
+# ones run. Safe for forks (read-only, no secrets).
+name: 🚦 PR Checks
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+# Least privilege: nothing here needs write access (keeps fork PRs working)
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Detect which kinds of files changed, so each check can opt in
+  detect-changes:
+    name: 🔎 Detect Changes
+    runs-on: ubuntu-latest
+    outputs:
+      local: ${{ steps.filter.outputs.local }}
+      stacks: ${{ steps.filter.outputs.stacks }}
+      sources_csv: ${{ steps.filter.outputs.sources_csv }}
+      scripts: ${{ steps.filter.outputs.scripts }}
+      workflows: ${{ steps.filter.outputs.workflows }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
+
+      # PR-only (needs a base to diff); on dispatch every check runs via its fallback
+      - name: Filter paths
+        id: filter
+        if: github.event_name == 'pull_request'
+        uses: dorny/paths-filter@7b450fff21473bca461d4b92ce414b9d0420d706 # v4
+        with:
+          filters: |
+            local:
+              - 'sources/local/**'
+            stacks:
+              - 'sources/stacks/**'
+            sources_csv:
+              - 'sources.csv'
+            scripts:
+              - 'lib/**'
+              - 'Schema.json'
+              - 'Makefile'
+            workflows:
+              - '.github/workflows/**'
+
+  # The important one: thoroughly validate added/changed local template sources
+  local-sources:
+    name: 🧩 Local Sources
+    runs-on: ubuntu-latest
+    needs: detect-changes
+    if: needs.detect-changes.outputs.local == 'true' || github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.x'
+          cache: pip
+          cache-dependency-path: lib/requirements.txt
+
+      - name: Install dependencies
+        run: pip install -r lib/requirements.txt
+
+      - name: Validate local template sources
+        run: python lib/validate_sources.py sources/local
+
+  # Validate compose stack files referenced by local stack templates
+  stacks:
+    name: 🐳 Stack Files
+    runs-on: ubuntu-latest
+    needs: detect-changes
+    if: needs.detect-changes.outputs.stacks == 'true' || github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.x'
+          cache: pip
+          cache-dependency-path: lib/requirements.txt
+
+      - name: Install dependencies
+        run: pip install -r lib/requirements.txt PyYAML
+
+      - name: Validate compose stack files
+        run: python lib/validate_sources.py sources/stacks
+
+  # Validate the external sources list (structure + unique names + http urls)
+  sources-list:
+    name: 📇 Sources List
+    runs-on: ubuntu-latest
+    needs: detect-changes
+    if: needs.detect-changes.outputs.sources_csv == 'true' || github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.x'
+          cache: pip
+          cache-dependency-path: lib/requirements.txt
+
+      - name: Install dependencies
+        run: pip install -r lib/requirements.txt
+
+      - name: Validate sources.csv
+        run: python lib/validate_sources.py sources.csv
+
+  # When the tooling or schema changes: compile, self-check the schema, re-validate output
+  scripts:
+    name: 🐍 Scripts + Schema
+    runs-on: ubuntu-latest
+    needs: detect-changes
+    if: needs.detect-changes.outputs.scripts == 'true' || github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.x'
+          cache: pip
+          cache-dependency-path: lib/requirements.txt
+
+      - name: Install dependencies
+        run: pip install -r lib/requirements.txt
+
+      - name: Byte-compile lib scripts
+        run: python -m py_compile lib/*.py
+
+      - name: Check Schema.json is a valid Draft-07 schema
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from jsonschema import Draft7Validator
+          Draft7Validator.check_schema(json.load(open('Schema.json')))
+          print('Schema.json is a valid Draft-07 schema')
+          PY
+
+      - name: Validate committed templates.json
+        run: python lib/validate.py
+
+  # Lint every workflow with actionlint + zizmor
+  workflow-audit:
+    name: 🛠️ Workflow Audit
+    runs-on: ubuntu-latest
+    needs: detect-changes
+    if: needs.detect-changes.outputs.workflows == 'true' || github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
+
+      - name: Run actionlint
+        uses: raven-actions/actionlint@3d39aea434753780c3b3d4a1a31c854b4dbf49d7 # v2
+        with:
+          # comma-separated globs -- matches every workflow
+          files: .github/workflows/*.yml
+          fail-on-error: true
+
+      - name: Run zizmor
+        uses: zizmorcore/zizmor-action@192e21d79ab29983730a13d1382995c2307fbcaa # v0.5.7
+        with:
+          # scan the whole workflows dir
+          inputs: .github/workflows/
+          online-audits: false
+          advanced-security: false
+          annotations: true
+
+  # Always runs: exercises the real pipeline end-to-end and publishes the result
+  build:
+    name: 🔨 Build + Artifact
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.x'
+          cache: pip
+          cache-dependency-path: lib/requirements.txt
+
+      - name: Install dependencies
+        run: make install_requirements
+
+      - name: Download external sources
+        # Non-fatal: a transient upstream outage must not fail a contributor's PR
+        run: make download || echo "::warning::Some external sources failed to download; tolerated for PR checks"
+
+      - name: Combine + validate
+        # ALLOW_SHRINK because external sources may be partial here; the publish workflow stays strict
+        env:
+          ALLOW_SHRINK: '1'
+        run: make combine validate
+
+      - name: Upload templates.json
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: templates-json
+          path: templates.json
+          if-no-files-found: error
+
+  # Render a table of every check's result into the run summary
+  summary:
+    name: 📋 Summary
+    runs-on: ubuntu-latest
+    if: always()
+    continue-on-error: true
+    needs:
+      - local-sources
+      - stacks
+      - sources-list
+      - scripts
+      - workflow-audit
+      - build
+    steps:
+      - name: Render summary
+        env:
+          NEEDS: ${{ toJSON(needs) }}
+        run: |
+          set -euo pipefail
+          label() {
+            case "$1" in
+              local-sources) echo "🧩 Local Sources" ;;
+              stacks) echo "🐳 Stack Files" ;;
+              sources-list) echo "📇 Sources List" ;;
+              scripts) echo "🐍 Scripts + Schema" ;;
+              workflow-audit) echo "🛠️ Workflow Audit" ;;
+              build) echo "🔨 Build + Artifact" ;;
+              *) echo "$1" ;;
+            esac
+          }
+          status() {
+            case "$1" in
+              success) echo "✅ Passed" ;;
+              skipped) echo "⏭️ Skipped" ;;
+              cancelled) echo "🚫 Cancelled" ;;
+              failure) echo "❌ Failed" ;;
+              *) echo "❔ $1" ;;
+            esac
+          }
+          {
+            echo "## PR Check Summary"
+            echo ""
+            echo "| Check | Result |"
+            echo "|-------|--------|"
+          } >> "$GITHUB_STEP_SUMMARY"
+          for job in $(echo "$NEEDS" | jq -r 'keys[]'); do
+            result=$(echo "$NEEDS" | jq -r --arg j "$job" '.[$j].result')
+            echo "| $(label "$job") | $(status "$result") |" >> "$GITHUB_STEP_SUMMARY"
+          done

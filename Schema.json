@@ -22,7 +22,7 @@
             "type": "integer",
             "minimum": 1,
             "maximum": 4,
-            "description": "The type of the application (1=container, 2=swarm stack, 3=compose stack, 4=kubernetes)."
+            "description": "The type of the application (1=container, 2=swarm stack, 3=compose stack, 4=compose edge stack)."
           },
           "title": {
             "type": "string",
@@ -44,8 +44,8 @@
           },
           "platform": {
             "type": "string",
-            "minLength": 1,
-            "description": "The target platform of the application (e.g., 'linux', 'windows')."
+            "enum": ["linux", "windows"],
+            "description": "The target platform of the application; omit for multi-platform."
           },
           "logo": {
             "type": "string",
@@ -89,6 +89,7 @@
                   "description": "Whether the volume is read-only."
                 }
               },
+              "additionalProperties": false,
               "required": ["container"]
             },
             "description": "An array of volume mappings for the application."
@@ -128,11 +129,13 @@
                       "value": { "type": "string" },
                       "default": { "type": "boolean" }
                     },
+                    "additionalProperties": false,
                     "required": ["text", "value"]
                   },
                   "description": "Dropdown options for the environment variable."
                 }
               },
+              "additionalProperties": false,
               "required": ["name"]
             },
             "description": "Environment variables for the template."
@@ -151,6 +154,7 @@
                   "minLength": 1
                 }
               },
+              "additionalProperties": false,
               "required": ["name", "value"]
             },
             "description": "Docker labels for the template."
@@ -169,6 +173,7 @@
                 "description": "Path to the stack file within the repository."
               }
             },
+            "additionalProperties": false,
             "required": ["url", "stackfile"],
             "description": "Repository details for stack templates (types 2 and 3)."
           },
@@ -211,8 +216,13 @@
           "stackFile": {
             "type": "string",
             "description": "Inline stack file content. When present, Portainer uses this directly instead of cloning the repository."
+          },
+          "maintainer": {
+            "type": "string",
+            "description": "Maintainer of the template (metadata added by this repo; ignored by Portainer)."
           }
         },
+        "additionalProperties": false,
         "required": ["id", "type", "title", "description"],
         "allOf": [
           {
@@ -226,10 +236,15 @@
           {
             "if": { "properties": { "type": { "const": 3 } } },
             "then": { "required": ["repository"] }
+          },
+          {
+            "if": { "properties": { "type": { "const": 4 } } },
+            "then": { "anyOf": [{ "required": ["stackFile"] }, { "required": ["repository"] }] }
           }
         ]
       }
     }
   },
+  "additionalProperties": false,
   "required": ["version", "templates"]
 }

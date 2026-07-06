@@ -1,62 +1,86 @@
 import os
 import csv
+import sys
+import time
 import requests
 import json
+
+from log import get_logger, banner
+
+log = get_logger()
 
 dir = os.path.dirname(os.path.abspath(__file__))
 
 destination_dir = os.path.join(dir, '../sources/external')
 sources_list = os.path.join(dir, '../sources.csv')
 
-# Downloads the file from a given URL, to the local destination
+# Downloads the templates file from a given URL, to the local destination
 def download(url: str, filename: str, maintainer: str):
     file_path = os.path.join(destination_dir, filename)
-    print('Downloading', url)
-    r = requests.get(url, stream=True)
-    if r.ok:
-        print('saving to', os.path.abspath(file_path))
-        with open(file_path, 'wb') as f:
-            for chunk in r.iter_content(chunk_size=1024 * 8):
-                if chunk:
-                    f.write(chunk)
-                    f.flush()
-                    os.fsync(f.fileno())
+    log.info(f'Downloading {url}')
+    sourceJson = None
+    for attempt in range(3):
+        try:
+            r = requests.get(url, timeout=30)
+            r.raise_for_status()
+            sourceJson = r.json()
+            break
+        except (requests.RequestException, ValueError) as err:
+            if attempt == 2:
+                log.warning(f'Skipping source due to an error: {url} ({err})')
+                return False
+            time.sleep(2 ** attempt)
 
-        sourceJson = {}
-        with open(file_path) as f:
-            try:
-                sourceJson = json.load(f)
-                # Add maintainer field to each template
-                for t in sourceJson.get('templates', []):
-                    t['maintainer'] = maintainer
+    # Handle sources without valid data
+    if isinstance(sourceJson, list):
+        sourceJson = {'templates': sourceJson}
+    templates = sourceJson.get('templates') if isinstance(sourceJson, dict) else None
+    if not isinstance(templates, list) or not templates:
+        log.warning(f'Skipping source with no templates: {url}')
+        return False
 
-            except json.decoder.JSONDecodeError as err:
-                print(f'Skipping one of the sources due to an error: {f.name}')
-                print(f'Error msg: {err.msg}')
+    # Add maintainer field to each template
+    for t in templates:
+        if isinstance(t, dict) and maintainer:
+            t['maintainer'] = maintainer
 
-        if not sourceJson:
-           return
-
-        with open(file_path, 'w') as f:
-            json.dump(sourceJson, f, indent=2, sort_keys=False)
-
-    else:  # HTTP status code 4XX/5XX
-        print('Download failed: status code {}\n{}'.format(r.status_code, r.text))
+    log.debug(f'Saving to {os.path.abspath(file_path)}')
+    with open(file_path, 'w') as f:
+        json.dump(sourceJson, f, indent=2, sort_keys=False)
+    return True
 
 # Gets list of URLs to download from CSV file
 def get_source_list():
-  sources=[]
+  sources = []
+  seen = set()
   with open(sources_list, mode='r') as file:
       csvFile = csv.reader(file)
       for lines in csvFile:
-        if len(lines) > 1 and lines[1].strip():
-          sources.append(lines)
+        row = [col.strip() for col in lines]
+        if len(row) < 2 or not row[0] or not row[1]:
+          if any(row):
+            log.warning(f'Skipping malformed sources.csv row: {lines}')
+          continue
+        if row[0] in seen:
+          log.warning(f'Skipping duplicate source: {row[0]}')
+          continue
+        seen.add(row[0])
+        sources.append(row)
   return sources
 
 # Create destination folder if not yet present
 if not os.path.exists(destination_dir):
   os.makedirs(destination_dir)
 
-# For each source, download the templates JSON file
-for sourceUrl in get_source_list():
-  download(sourceUrl[1], sourceUrl[0] + '.json', sourceUrl[2])
+banner('Download', 'Fetch template sources listed in sources.csv')
+
+sources = get_source_list()
+failures = []
+for source in sources:
+  if not download(source[1], source[0] + '.json', source[2] if len(source) > 2 else ''):
+    failures.append(source[0])
+
+log.info(f'Downloaded {len(sources) - len(failures)}/{len(sources)} sources')
+if failures:
+  log.error(f'Failed to download valid sources: {", ".join(failures)}')
+  sys.exit(1)
