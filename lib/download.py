@@ -1,6 +1,7 @@
 import os
 import csv
 import sys
+import time
 import requests
 import json
 
@@ -17,13 +18,18 @@ sources_list = os.path.join(dir, '../sources.csv')
 def download(url: str, filename: str, maintainer: str):
     file_path = os.path.join(destination_dir, filename)
     log.info(f'Downloading {url}')
-    try:
-        r = requests.get(url, timeout=30)
-        r.raise_for_status()
-        sourceJson = r.json()
-    except (requests.RequestException, ValueError) as err:
-        log.warning(f'Skipping source due to an error: {url} ({err})')
-        return False
+    sourceJson = None
+    for attempt in range(3):
+        try:
+            r = requests.get(url, timeout=30)
+            r.raise_for_status()
+            sourceJson = r.json()
+            break
+        except (requests.RequestException, ValueError) as err:
+            if attempt == 2:
+                log.warning(f'Skipping source due to an error: {url} ({err})')
+                return False
+            time.sleep(2 ** attempt)
 
     # Handle sources without valid data
     if isinstance(sourceJson, list):

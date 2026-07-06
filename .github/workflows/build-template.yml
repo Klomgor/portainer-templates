@@ -5,7 +5,7 @@ name: 🏗️ Build + Publish templates.json file
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 2 * * 0' # At 02:00 on Sunday
+    - cron: '0 2 * * *' # Nightly at 02:00
 
 # Read by default; the build job elevates to write to commit
 permissions:

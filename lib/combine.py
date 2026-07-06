@@ -96,6 +96,8 @@ def normalize_template(t):
     categories += extra
   if categories:
     t['categories'] = list(dict.fromkeys(categories))
+  elif 'categories' in t:
+    del t['categories']
 
   # Convert legacy v2 edge templates (type 4 with a stackfile URL) to compose stacks
   if t.get('type') == 4 and isinstance(t.get('stackfile'), str):
@@ -108,8 +110,9 @@ def normalize_template(t):
         t.setdefault('categories', ['edge'])
         break
     else:
-      if not sf.startswith('http'):
-        t['stackFile'] = sf  # inline stack content under a miscased key
+      if sf.startswith('http'):
+        raise ValueError(f'unrecognized stackfile URL: {sf}')
+      t['stackFile'] = sf  # inline stack content under a miscased key
 
   # Fix env vars
   if 'env' in t:
