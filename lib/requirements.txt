@@ -1,3 +1,4 @@
 requests
 jsonschema
 rfc3987
+PyYAML
