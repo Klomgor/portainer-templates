@@ -1,4 +1,4 @@
-.PHONY: all install_requirements download combine validate list
+.PHONY: all install_requirements download combine validate validate_sources list
 
 PYTHON := $(shell which python3 2>/dev/null || which python)
 
@@ -15,6 +15,9 @@ combine:
 
 validate:
 	$(PYTHON) lib/validate.py
+
+validate_sources:
+	$(PYTHON) lib/validate_sources.py
 
 list:
 	$(PYTHON) lib/list.py
