@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 🩹 An app or container isn't working
+    url: https://github.com/lissy93/portainer-templates/blob/main/.github/BROKEN_APP.md
+    about: 'This repo only compiles the templates: app bugs are fixed upstream. Please read this first.'
+  - name: ➕ Add or update a template
+    url: https://github.com/lissy93/portainer-templates/blob/main/.github/CONTRIBUTING.md
+    about: Templates are added with a quick pull request - here's how.
+  - name: 🔒 Report a security issue
+    url: https://github.com/lissy93/portainer-templates/security/advisories/new
+    about: Please report vulnerabilities privately, not as a public issue.

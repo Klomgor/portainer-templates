@@ -1,0 +1,179 @@
+# Bumps the git tag: patch on each templates.json change, minor ~monthly,
+# major by hand for big changes
+name: 🔖 Tag
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'templates.json'
+  schedule:
+    # 00:00 UTC on the 1st of every month -> minor bump (monthly release marker)
+    - cron: '0 0 1 * *'
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: 'Version bump to apply'
+        required: false
+        default: auto
+        type: choice
+        options:
+          - auto
+          - patch
+          - minor
+          - major
+
+# Least privilege by default; the job below elevates to only what it needs
+permissions:
+  contents: read
+
+# Serialise every run of this workflow: two updates must not race to the same tag
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+  tag:
+    name: 🏷️ Bump + Tag
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    # Only tag from main (guards a manual dispatch from a feature branch)
+    if: github.ref == 'refs/heads/main'
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          # Full history + all tags, so we can find the latest semver tag
+          fetch-depth: 0
+          # We push with our own token below
+          persist-credentials: false
+
+      - name: Compute next version
+        id: version
+        env:
+          BUMP_INPUT: ${{ inputs.bump || 'auto' }}
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          set -euo pipefail
+
+          # Highest strict-semver tag, version-sorted so v0.10.0 > v0.9.0
+          latest=$(git tag --sort=-v:refname | grep -m1 -E '^v[0-9]+\.[0-9]+\.[0-9]+$' || true)
+          if [ -z "$latest" ]; then
+            latest="v0.0.0"
+            echo "No existing semver tag found, starting from ${latest}"
+          fi
+
+          # Split "vMAJOR.MINOR.PATCH" into numeric parts and sanity-check them
+          IFS=. read -r major minor patch <<< "${latest#v}"
+          if ! [[ "$major" =~ ^[0-9]+$ && "$minor" =~ ^[0-9]+$ && "$patch" =~ ^[0-9]+$ ]]; then
+            echo "::error::Could not parse semver from tag '${latest}'"
+            exit 1
+          fi
+
+          # 'auto': the monthly scheduled run bumps minor, everything else patch
+          bump="$BUMP_INPUT"
+          if [ "$bump" = "auto" ]; then
+            if [ "$EVENT_NAME" = "schedule" ]; then
+              bump="minor"
+              echo "Scheduled monthly run -> minor"
+            else
+              bump="patch"
+              echo "templates.json update -> patch"
+            fi
+          fi
+
+          # Monthly minor is just a release marker -- skip it if templates.json is
+          # unchanged since the last release. Scheduled run only; forced bumps proceed.
+          if [ "$EVENT_NAME" = "schedule" ]; then
+            last_release=$(git tag --sort=-v:refname --merged HEAD \
+              | grep -E '^v[0-9]+\.[0-9]+\.0$' | awk 'NR==1' || true)
+            if [ -n "$last_release" ] \
+               && git cat-file -e "${last_release}:templates.json" 2>/dev/null \
+               && git diff --quiet "${last_release}" HEAD -- templates.json; then
+              echo "templates.json unchanged since ${last_release}; skipping monthly minor"
+              {
+                echo "previous=${latest}"
+                echo "bump=${bump}"
+                echo "skip=true"
+              } >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+          fi
+
+          case "$bump" in
+            major) major=$((major + 1)); minor=0; patch=0 ;;
+            minor) minor=$((minor + 1)); patch=0 ;;
+            patch) patch=$((patch + 1)) ;;
+            *) echo "::error::Unknown bump type '${bump}'"; exit 1 ;;
+          esac
+
+          next="v${major}.${minor}.${patch}"
+          echo "Bumping ${latest} -> ${next} (${bump})"
+          {
+            echo "previous=${latest}"
+            echo "next=${next}"
+            echo "bump=${bump}"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Create and push tag
+        id: tag
+        if: steps.version.outputs.skip != 'true'
+        env:
+          NEXT: ${{ steps.version.outputs.next }}
+          PREVIOUS: ${{ steps.version.outputs.previous }}
+          BUMP: ${{ steps.version.outputs.bump }}
+          REPO: ${{ github.repository }}
+          GH_TOKEN: ${{ secrets.BOT_TOKEN || secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          # Idempotent: never clobber an existing tag (guards re-runs and races)
+          if git rev-parse -q --verify "refs/tags/${NEXT}" >/dev/null; then
+            echo "::warning::Tag ${NEXT} already exists, skipping"
+            echo "result=existed" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # An annotated tag needs a tagger identity
+          git config user.name "Liss-Bot"
+          git config user.email "alicia-gh-bot@mail.as93.net"
+          git tag -a "${NEXT}" -m "Release ${NEXT} (${BUMP} bump)"
+
+          # Push over an explicit authed remote (checkout creds aren't persisted)
+          git push "https://x-access-token:${GH_TOKEN}@github.com/${REPO}.git" "refs/tags/${NEXT}"
+
+          echo "Pushed tag ${NEXT} (was ${PREVIOUS})"
+          echo "result=created" >> "$GITHUB_OUTPUT"
+
+      - name: Summary
+        if: always()
+        env:
+          PREVIOUS: ${{ steps.version.outputs.previous }}
+          NEXT: ${{ steps.version.outputs.next }}
+          BUMP: ${{ steps.version.outputs.bump }}
+          SKIP: ${{ steps.version.outputs.skip }}
+          TAG_RESULT: ${{ steps.tag.outputs.result }}
+          TAG_OUTCOME: ${{ steps.tag.outcome }}
+          REPO_URL: ${{ github.server_url }}/${{ github.repository }}
+        run: |
+          set -euo pipefail
+          {
+            echo "## Tag"
+            echo ""
+            echo "| Field | Value |"
+            echo "|-------|-------|"
+            echo "| Previous | \`${PREVIOUS:-n/a}\` |"
+            echo "| Bump | ${BUMP:-n/a} |"
+            if [ "${SKIP:-}" = "true" ]; then
+              echo "| New tag | ⏭️ Skipped — templates.json unchanged since the last release |"
+            elif [ "${TAG_RESULT:-}" = "created" ]; then
+              echo "| New tag | ✅ [\`${NEXT}\`](${REPO_URL}/releases/tag/${NEXT}) |"
+            elif [ "${TAG_RESULT:-}" = "existed" ]; then
+              echo "| New tag | ⏭️ Already existed: \`${NEXT}\` |"
+            elif [ "${TAG_OUTCOME:-}" = "failure" ]; then
+              echo "| New tag | ❌ Failed |"
+            else
+              echo "| New tag | ⏭️ Skipped |"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"

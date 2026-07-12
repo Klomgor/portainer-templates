@@ -1,12 +1,61 @@
-# To get started with Dependabot version updates, you'll need to specify which
-# package ecosystems to update and where the package manifests are located.
-# Please see the documentation for more information:
-# https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
-# https://containers.dev/guide/dependabot
+# Grouped weekly version bumps, one PR per ecosystem.
+# Security fixes are separate: enabled in repo settings, raised individually.
+# https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
 
 version: 2
 updates:
- - package-ecosystem: "devcontainers"
-   directory: "/"
-   schedule:
-     interval: weekly
+  # .github/workflows/*
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "friday"
+      time: "15:00"
+      timezone: "Europe/London"
+    groups:
+      github-actions:
+        applies-to: version-updates
+        patterns:
+          - "*"
+
+  # .devcontainer/devcontainer.json
+  - package-ecosystem: "devcontainers"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "friday"
+      time: "15:00"
+      timezone: "Europe/London"
+    groups:
+      devcontainers:
+        applies-to: version-updates
+        patterns:
+          - "*"
+
+  # Dockerfile
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "friday"
+      time: "15:00"
+      timezone: "Europe/London"
+    groups:
+      docker:
+        applies-to: version-updates
+        patterns:
+          - "*"
+
+  # lib/requirements.txt
+  - package-ecosystem: "pip"
+    directory: "/lib"
+    schedule:
+      interval: "weekly"
+      day: "friday"
+      time: "15:00"
+      timezone: "Europe/London"
+    groups:
+      python:
+        applies-to: version-updates
+        patterns:
+          - "*"
