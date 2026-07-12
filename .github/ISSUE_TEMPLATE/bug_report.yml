@@ -1,0 +1,29 @@
+name: 🐛 Bug in this project
+description: Something wrong with the tooling, website, docs, or the template build itself
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        For an app or container that isn't working, please [read this first](https://github.com/lissy93/portainer-templates/blob/main/.github/BROKEN_APP.md) - those are fixed upstream, not here.
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: First up
+      options:
+        - label: This is a problem with **this project**, not with an app it lists
+          required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What's happening?
+      description: A clear description of the bug, and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: How can we see it for ourselves? Any additional context needed to recreate (such as Portainer version and environments)
+    validations:
+      required: false
