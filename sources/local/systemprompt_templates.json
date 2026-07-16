@@ -1,0 +1,58 @@
+{
+  "version": "3",
+  "templates": [
+    {
+      "id": 1,
+      "categories": ["AI", "Tools"],
+      "description": "Self-owned AI control plane: governance gateway for Claude, OpenAI, and Gemini with policy checks, audit, rate limits, and MCP orchestration. Bundles Postgres.",
+      "env": [
+        {
+          "name": "POSTGRES_PASSWORD",
+          "label": "Postgres password",
+          "description": "Set before first deploy; the database volume is initialised with it."
+        },
+        {
+          "default": "",
+          "name": "ANTHROPIC_API_KEY",
+          "label": "Anthropic API key",
+          "description": "At least one provider key is required (leave others blank)."
+        },
+        {
+          "default": "",
+          "name": "OPENAI_API_KEY",
+          "label": "OpenAI API key",
+          "description": "Optional."
+        },
+        {
+          "default": "",
+          "name": "GEMINI_API_KEY",
+          "label": "Gemini API key",
+          "description": "Optional."
+        },
+        {
+          "default": "",
+          "name": "EXTERNAL_URL",
+          "label": "External URL",
+          "description": "Public URL of this deployment (e.g. https://gateway.example.com). Optional; used for API URL + CORS."
+        },
+        {
+          "default": "8080",
+          "name": "HTTP_PORT",
+          "label": "HTTP port",
+          "description": "Host port to publish the gateway on."
+        }
+      ],
+      "logo": "https://raw.githubusercontent.com/systempromptio/systemprompt-template/main/storage/files/images/icon-256.png",
+      "name": "systemprompt",
+      "note": "Set at least one AI provider key or the gateway will not boot. First boot runs migrations and a publish pipeline; allow several minutes before the healthcheck passes. Optionally set EXTERNAL_URL to the public URL you will serve it on.",
+      "platform": "linux",
+      "repository": {
+        "stackfile": "sources/stacks/systemprompt.yml",
+        "url": "https://github.com/lissy93/portainer-templates"
+      },
+      "restart_policy": "unless-stopped",
+      "title": "systemprompt",
+      "type": 3
+    }
+  ]
+}
