@@ -130,13 +130,18 @@ jobs:
             --arg prev "$PREV" \
             --arg cur "$TARGET" \
             --arg total "$total" \
-            --arg repo "$REPO_URL" '
+            --arg repo "$REPO_URL" \
+            --arg site "https://portainer-templates.as93.net" '
             ($d[0]) as $d |
-            def section(title; arr; cap):
+            # must match the website slugify in src/routes/[slug]/+page.server.ts
+            def slugify: ascii_downcase | gsub("[^a-z ]"; "") | gsub(" "; "-");
+            def md_esc: gsub("(?<x>[\\[\\]])"; "\\\(.x)");
+            def item(link): if link then "- [\(md_esc)](\($site)/\(. | slugify))" else "- \(.)" end;
+            def section(title; arr; cap; link):
               if (arr | length) == 0 then empty
               else
                 "### \(title) (\(arr | length))",
-                (arr[0:cap][] | "- \(.)"),
+                (arr[0:cap][] | item(link)),
                 (if (arr | length) > cap
                   then "- …and \((arr | length) - cap) more"
                   else empty end),
@@ -146,9 +151,9 @@ jobs:
             ( if $prev == "" then empty
               else
                 "",
-                section("➕ Added";   $d.added;   40),
-                section("➖ Removed"; $d.removed; 40),
-                section("🔄 Updated"; $d.updated; 40),
+                section("➕ Added";   $d.added;   40; true),
+                section("➖ Removed"; $d.removed; 40; false),
+                section("🔄 Updated"; $d.updated; 40; true),
                 "[Full diff](\($repo)/compare/\($prev)...\($cur))"
               end )
           ' > notes.md
