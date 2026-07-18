@@ -1,0 +1,65 @@
+{
+  "version": "2",
+  "templates": [
+    {
+      "type": 1,
+      "title": "PodFetch",
+      "name": "podfetch",
+      "description": "Sleek, self-hosted podcast manager that automatically downloads new episodes, offers a web UI for listening, and provides a GPodder-compatible sync API for mobile apps like AntennaPod.",
+      "note": "To use the GPodder sync API, set BASIC_AUTH=true together with USERNAME and PASSWORD, and set GPODDER_INTEGRATION_ENABLED=true. Documentation: https://samtv12345.github.io/PodFetch/",
+      "categories": [
+        "Media",
+        "Downloaders"
+      ],
+      "platform": "linux",
+      "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/podfetch.png",
+      "image": "samuel19982/podfetch:latest",
+      "ports": [
+        "8000:8000/tcp"
+      ],
+      "restart_policy": "unless-stopped",
+      "volumes": [
+        {
+          "container": "/app/podcasts",
+          "bind": "/portainer/Files/AppData/PodFetch/podcasts"
+        },
+        {
+          "container": "/app/db",
+          "bind": "/portainer/Files/AppData/PodFetch/db"
+        }
+      ],
+      "env": [
+        {
+          "default": "sqlite:///app/db/podcast.db",
+          "label": "DATABASE_URL",
+          "name": "DATABASE_URL"
+        },
+        {
+          "default": "300",
+          "label": "POLLING_INTERVAL",
+          "name": "POLLING_INTERVAL"
+        },
+        {
+          "default": "false",
+          "label": "BASIC_AUTH",
+          "name": "BASIC_AUTH"
+        },
+        {
+          "default": "",
+          "label": "USERNAME",
+          "name": "USERNAME"
+        },
+        {
+          "default": "",
+          "label": "PASSWORD",
+          "name": "PASSWORD"
+        },
+        {
+          "default": "false",
+          "label": "GPODDER_INTEGRATION_ENABLED",
+          "name": "GPODDER_INTEGRATION_ENABLED"
+        }
+      ]
+    }
+  ]
+}
