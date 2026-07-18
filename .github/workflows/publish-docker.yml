@@ -11,9 +11,14 @@ env:
   DH_IMAGE: ${{ secrets.DOCKER_REPO || github.event.repository.name }}
   GH_IMAGE: ${{ github.repository_owner }}/${{ github.event.repository.name }}
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   docker:
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     permissions: { contents: read, packages: write }
     if: "!contains(github.event.head_commit.message, '[ci-skip]')"
 
