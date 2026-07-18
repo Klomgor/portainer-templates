@@ -1,15 +1,24 @@
-# Regenerates templates.json weekly and commits it back to main.
-# Cron/dispatch only (no push trigger) so its own commit can't re-run it.
-name: 🏗️ Build + Publish templates.json file
+# Regenerates templates.json and commits it back to main.
+# Runs nightly, on demand, or when a source file changes
+name: 📜 Build + Publish templates.json file
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: # whenever i click the button
   schedule:
     - cron: '0 2 * * *' # Nightly at 02:00
+  push: # Runs when the source data is changed
+    branches: [main]
+    paths:
+      - 'sources/**'
+      - 'sources.csv'
 
 # Read by default; the build job elevates to write to commit
 permissions:
   contents: read
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
 
 jobs:
   build:
