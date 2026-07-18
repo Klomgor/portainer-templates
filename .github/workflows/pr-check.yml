@@ -20,6 +20,7 @@ jobs:
   detect-changes:
     name: 🔎 Detect Changes
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     outputs:
       local: ${{ steps.filter.outputs.local }}
       stacks: ${{ steps.filter.outputs.stacks }}
@@ -56,6 +57,7 @@ jobs:
   local-sources:
     name: 🧩 Local Sources
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     needs: detect-changes
     if: needs.detect-changes.outputs.local == 'true' || github.event_name == 'workflow_dispatch'
     steps:
@@ -81,6 +83,7 @@ jobs:
   stacks:
     name: 🐳 Stack Files
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     needs: detect-changes
     if: needs.detect-changes.outputs.stacks == 'true' || github.event_name == 'workflow_dispatch'
     steps:
@@ -106,6 +109,7 @@ jobs:
   sources-list:
     name: 📇 Sources List
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     needs: detect-changes
     if: needs.detect-changes.outputs.sources_csv == 'true' || github.event_name == 'workflow_dispatch'
     steps:
@@ -131,6 +135,7 @@ jobs:
   scripts:
     name: 🐍 Scripts + Schema
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     needs: detect-changes
     if: needs.detect-changes.outputs.scripts == 'true' || github.event_name == 'workflow_dispatch'
     steps:
@@ -169,6 +174,7 @@ jobs:
   workflow-audit:
     name: 🛠️ Workflow Audit
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     needs: detect-changes
     if: needs.detect-changes.outputs.workflows == 'true' || github.event_name == 'workflow_dispatch'
     steps:
@@ -197,6 +203,7 @@ jobs:
   build:
     name: 🔨 Build + Artifact
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
@@ -234,6 +241,7 @@ jobs:
   summary:
     name: 📋 Summary
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     if: always()
     continue-on-error: true
     needs:

@@ -884,16 +884,16 @@ https://codeberg.org/alicia/portainer-templates/raw/branch/main/templates.json
 
 ### Sponsors
 
-![sponsors badge](https://readme-contribs.as93.net/sponsors/lissy93?avatarSize=80)
+[![sponsors badge](https://readme-contribs.as93.net/sponsors/lissy93?perRow=12)](https://github.com/sponsors/lissy93)
 
 ### Contributors
 
-![contributors badge](https://readme-contribs.as93.net/contributors/lissy93/portainer-templates?avatarSize=80))
+[![contributors badge](https://readme-contribs.as93.net/contributors/lissy93/portainer-templates?perRow=12)](https://github.com/lissy93/portainer-templates/graphs/contributors)
 
 
 ### Stargzers
 
-![stargazers badge](https://readme-contribs.as93.net/stargazers/lissy93/portainer-templates?perRow=16&limit=64)
+[![stargazers badge](https://readme-contribs.as93.net/stargazers/lissy93/portainer-templates?perRow=24)](https://github.com/lissy93/portainer-templates/stargazers)
 
 
 ---
