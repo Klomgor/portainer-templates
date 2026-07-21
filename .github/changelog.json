@@ -1,0 +1,101 @@
+{
+  "entries": [
+    {
+      "version": "v1.0.6",
+      "previous": "v1.0.5",
+      "date": "2026-07-18",
+      "templateCount": 676,
+      "added": [
+        "PodFetch"
+      ],
+      "removed": [],
+      "updated": []
+    },
+    {
+      "version": "v1.0.5",
+      "previous": "v1.0.4",
+      "date": "2026-07-18",
+      "templateCount": 675,
+      "added": [
+        "systemprompt"
+      ],
+      "removed": [],
+      "updated": []
+    },
+    {
+      "version": "v1.0.4",
+      "previous": "v1.0.3",
+      "date": "2026-07-17",
+      "templateCount": 674,
+      "added": [],
+      "removed": [
+        "Openvscode-server"
+      ],
+      "updated": []
+    },
+    {
+      "version": "v1.0.3",
+      "previous": "v1.0.2",
+      "date": "2026-07-13",
+      "templateCount": 675,
+      "added": [
+        "Reach Me Out"
+      ],
+      "removed": [],
+      "updated": []
+    },
+    {
+      "version": "v1.0.2",
+      "previous": "v1.0.1",
+      "date": "2026-07-11",
+      "templateCount": 674,
+      "added": [
+        "Doplarr_rs"
+      ],
+      "removed": [
+        "Doplarr"
+      ],
+      "updated": [
+        {
+          "title": "Swag",
+          "fields": [
+            "env"
+          ]
+        }
+      ]
+    },
+    {
+      "version": "v1.0.1",
+      "previous": "v1.0.0",
+      "date": "2026-07-10",
+      "templateCount": 674,
+      "added": [
+        "Cloudflared-web"
+      ],
+      "removed": [],
+      "updated": [
+        {
+          "title": "Kimai",
+          "fields": [
+            "env"
+          ]
+        },
+        {
+          "title": "Nginx",
+          "fields": [
+            "description"
+          ]
+        }
+      ]
+    },
+    {
+      "version": "v1.0.0",
+      "previous": null,
+      "date": "2026-07-06",
+      "templateCount": 673,
+      "added": [],
+      "removed": [],
+      "updated": []
+    }
+  ]
+}
