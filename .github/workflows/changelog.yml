@@ -1,0 +1,83 @@
+# Re-generates the changelog.json whenever a new tag is created
+# To track template changes (added/removed/updated)
+name: 📋 Changelog
+
+on:
+  push:
+    tags: ['v[0-9]+.[0-9]+.[0-9]+']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+  changelog:
+    name: 📋 Update changelog.json
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up Python 🐍
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: '3.x'
+
+      - name: Generate changelog 🪵
+        run: python3 lib/changelog.py
+
+      - name: Commit and push ⤴️
+        env:
+          GH_TOKEN: ${{ secrets.BOT_TOKEN || secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          TAG: ${{ github.ref_type == 'tag' && github.ref_name || '' }}
+        run: |
+          set -euo pipefail
+          git config user.name "Liss-Bot"
+          git config user.email "alicia-gh-bot@mail.as93.net"
+          remote="https://x-access-token:${GH_TOKEN}@github.com/${REPO}.git"
+          git add .github/changelog.json
+          if git diff --staged --quiet; then
+            echo "changelog.json unchanged, nothing to commit"
+            exit 0
+          fi
+          git commit -m "Updates changelog${TAG:+ for ${TAG}} (auto-generated)"
+          # Replay onto latest main in case it moved since checkout (our commit
+          # only touches .github/changelog.json, so this can't conflict)
+          git pull --rebase "$remote" main
+          git push "$remote" HEAD:main
+
+      - name: Summary
+        if: always()
+        env:
+          TAG: ${{ github.ref_type == 'tag' && github.ref_name || 'n/a (manual run)' }}
+        run: |
+          set -euo pipefail
+          {
+            echo "## Changelog"
+            echo ""
+            echo "| Field | Value |"
+            echo "|-------|-------|"
+            echo "| Trigger | \`${TAG}\` |"
+            if [ -f .github/changelog.json ]; then
+              versions=$(jq '.entries | length' .github/changelog.json)
+              latest=$(jq -r '.entries[0]
+                | "\(.version): ✨ \(.added | length) added · 🗑️ \(.removed | length) removed · ♻️ \(.updated | length) updated"
+                ' .github/changelog.json)
+              echo "| Versions | ${versions} |"
+              echo "| Latest | ${latest} |"
+            else
+              echo "| Result | ❌ changelog.json was not generated |"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
